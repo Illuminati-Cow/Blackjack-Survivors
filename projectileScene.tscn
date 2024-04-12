@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://74twye6gainy"]
+
+[ext_resource type="Script" path="res://ProjectileShoot.gd" id="1_fgmdf"]
+[ext_resource type="Texture2D" uid="uid://dpqh2nhp5f7wd" path="res://icon.svg" id="2_qfniv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qm2os"]
+
+[node name="Projectile" type="Area2D"]
+script = ExtResource("1_fgmdf")
+speed = 500
+damage = 1
+ROF = 1
+metadata/damage = 1
+metadata/Speed = 500
+metadata/RateOfFire = 0
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture = ExtResource("2_qfniv")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_qm2os")
