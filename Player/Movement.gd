@@ -2,6 +2,15 @@ extends CharacterBody2D
 
 const GRAVITY = 200.0
 const WALK_SPEED = 200
+@export var Projectile : PackedScene
+@export var fireCooldown = 0.25
+var canShoot = true
+
+func _ready():
+	start()
+
+func start():
+	$ShootCooldown.wait_time = fireCooldown
 
 func _physics_process(delta):
 
@@ -19,3 +28,21 @@ func _physics_process(delta):
 
 	# "move_and_slide" already takes delta time into account.
 	move_and_slide()
+
+func _process(_delta):
+	print($ShootCooldown.time_left)
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		print("shooting projectile")
+		shoot()
+
+func shoot():
+	if not canShoot:
+		return
+	canShoot = false
+	$ShootCooldown.start()
+	var b = Projectile.instantiate()
+	owner.add_child(b)
+	b.transform = $Emitter.global_transform
+
+func _on_shoot_cooldown_timeout():
+	canShoot = true

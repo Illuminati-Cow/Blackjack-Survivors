@@ -15,8 +15,7 @@ scale = Vector2(4.948, 3.764)
 texture = ExtResource("1_bfc4c")
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_6li7k")]
+fireCooldown = null
 
 [node name="ShootCooldown" type="Timer" parent="CharacterBody2D"]
 one_shot = true
-
-[connection signal="timeout" from="CharacterBody2D/ShootCooldown" to="CharacterBody2D" method="_on_shoot_cooldown_timeout"]
