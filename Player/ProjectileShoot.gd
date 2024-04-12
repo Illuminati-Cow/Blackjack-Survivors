@@ -13,9 +13,10 @@ func _physics_process(delta):
 	#if position > 
 
 func _on_Projectile_body_entered(body):
-	if body.is_in_group("mobs"):
 		#body.queue_free()
-		body.hp -= ProjectileVars.Damage
+	var bodyHealth = find_child("Health")
+	if bodyHealth != null:
+		bodyHealth.modify_health(-1*ProjectileVars.Damage)
 	queue_free()
 
 

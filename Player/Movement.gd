@@ -41,9 +41,17 @@ func shoot():
 	ProjectileVars.speed += 100
 	canShoot = false
 	$ShootCooldown.start()
-	var b = ProjectileScene.instantiate()
-	owner.add_child(b)
-	b.transform = $Emitter.global_transform
+	if ProjectileVars.projectileCount > 1.0:
+		for i in floor(ProjectileVars.projectileCount):
+			var p1 = ProjectileScene.instantiate()
+			owner.add_child(p1)
+			p1.transform = $Emitter.global_transform
+			p1.transform.origin = $Emitter.global_transform.origin + Vector2(0, 50*i)
+			
+	else:
+		var p2 = ProjectileScene.instantiate()
+		owner.add_child(p2)
+		p2.transform = $Emitter.global_transform
 
 func _on_shoot_cooldown_timeout():
 	canShoot = true
