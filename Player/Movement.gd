@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 const GRAVITY = 200.0
 const WALK_SPEED = 200
-@export var Projectile : PackedScene
+@export var ProjectileScene : PackedScene
 @export var fireCooldown = 0.25
 var canShoot = true
 
@@ -38,9 +38,10 @@ func _process(_delta):
 func shoot():
 	if not canShoot:
 		return
+	ProjectileVars.speed += 100
 	canShoot = false
 	$ShootCooldown.start()
-	var b = Projectile.instantiate()
+	var b = ProjectileScene.instantiate()
 	owner.add_child(b)
 	b.transform = $Emitter.global_transform
 

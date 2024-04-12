@@ -1,7 +1,6 @@
 extends Area2D
 
-@export var speed: int
-@export var damage: int
+
 
 
 
@@ -10,13 +9,13 @@ func _ready():
 	pass # Replace with function body.
 
 func _physics_process(delta):
-	position += transform.x * speed * delta
+	position += transform.x * ProjectileVars.speed * delta
 	#if position > 
 
 func _on_Projectile_body_entered(body):
 	if body.is_in_group("mobs"):
 		#body.queue_free()
-		body.hp -= $Projectile.Damage
+		body.hp -= ProjectileVars.Damage
 	queue_free()
 
 

@@ -7,8 +7,6 @@
 
 [node name="Projectile" type="Area2D"]
 script = ExtResource("1_31whl")
-speed = 500
-damage = 1
 metadata/damage = 1
 metadata/Speed = 500
 metadata/RateOfFire = 0
