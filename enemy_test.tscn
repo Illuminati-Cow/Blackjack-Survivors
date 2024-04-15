@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=3 uid="uid://dd8qpcotwqj06"]
+
+[ext_resource type="Script" path="res://src/enemy/enemy.gd" id="1_2mpn2"]
+[ext_resource type="PackedScene" uid="uid://dm3bpvtknnrut" path="res://src/components/health/health.res" id="2_6oo1d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nb7vs"]
+
+[sub_resource type="GDScript" id="GDScript_2safl"]
+resource_name = "FollowMouse"
+script/source = "extends CharacterBody2D
+
+
+@export var SPEED = 300.0
+
+
+func _physics_process(delta):
+
+	# Get the input direction and handle the movement/deceleration.
+	# As good practice, you should replace UI actions with custom gameplay actions.
+	var mouse_pos = get_global_mouse_position()
+	var direction = position.direction_to(mouse_pos)
+	if direction and mouse_pos.distance_to(position) > 20:
+		velocity = direction * SPEED
+	else:
+		velocity *= .6
+
+	move_and_slide()
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tkg3i"]
+
+[sub_resource type="Gradient" id="Gradient_2mlag"]
+offsets = PackedFloat32Array(0, 0.447531, 1)
+colors = PackedColorArray(0.807903, 0.267411, 0.343737, 1, 1, 1, 1, 1, 0.384314, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o2dg2"]
+gradient = SubResource("Gradient_2mlag")
+width = 32
+height = 32
+
+[node name="EnemyTest" type="Node2D"]
+
+[node name="CardEnemy" type="CharacterBody2D" parent="." node_paths=PackedStringArray("target")]
+motion_mode = 1
+script = ExtResource("1_2mpn2")
+max_speed = 400.0
+max_force = 35.0
+mass = 1.0
+debug_mode = true
+target = NodePath("../Target")
+
+[node name="Sprite2D" type="Sprite2D" parent="CardEnemy"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CardEnemy"]
+shape = SubResource("RectangleShape2D_nb7vs")
+
+[node name="Health" parent="CardEnemy" instance=ExtResource("2_6oo1d")]
+
+[node name="Target" type="CharacterBody2D" parent="."]
+position = Vector2(-227, -149)
+motion_mode = 1
+script = SubResource("GDScript_2safl")
+SPEED = 600.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Target"]
+shape = SubResource("CapsuleShape2D_tkg3i")
+
+[node name="Sprite2D" type="Sprite2D" parent="Target"]
+texture = SubResource("GradientTexture2D_o2dg2")
+
+[node name="Camera2D" type="Camera2D" parent="."]
