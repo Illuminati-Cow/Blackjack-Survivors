@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 ProjectileVars="*res://projectile_vars.gd"
+GlobalVars="*res://global_vars.gd"
 
 [dotnet]
 
