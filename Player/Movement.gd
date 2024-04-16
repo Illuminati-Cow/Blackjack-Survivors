@@ -32,13 +32,13 @@ func _physics_process(delta):
 func _process(_delta):
 	#print($ShootCooldown.time_left)
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		print("shooting projectile")
 		shoot()
 
 func shoot():
 	if not canShoot:
 		return
 	#ProjectileVars.speed += 100
+	print("shooting projectile")
 	canShoot = false
 	$ShootCooldown.start()
 	if ProjectileVars.projectileCount > 1.0:
@@ -46,8 +46,8 @@ func shoot():
 			var p1 = ProjectileScene.instantiate()
 			owner.add_child(p1)
 			p1.transform = $Emitter.global_transform
-			var min = $Emitter.global_transform.origin - Vector2(0, floor(ProjectileVars.projectileCount*60))
-			var max = $Emitter.global_transform.origin + Vector2(0, floor(ProjectileVars.projectileCount*120))
+			var min = $Emitter.global_transform.origin - Vector2(0, floor(ProjectileVars.projectileCount*20))
+			var max = $Emitter.global_transform.origin + Vector2(0, floor(ProjectileVars.projectileCount*40))
 			#from pentadecagon at https://stackoverflow.com/questions/20925175/evenly-distribute-x-values-within-a-given-range:
 			p1.transform.origin = min + i*(max-min)/(floor(ProjectileVars.projectileCount)) #+ Vector2(0, 50*i)
 			

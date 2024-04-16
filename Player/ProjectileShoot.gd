@@ -1,7 +1,7 @@
 extends Area2D
 
 
-
+signal damaged_enemy(damage)
 
 
 # Called when the node enters the scene tree for the first time.
@@ -15,15 +15,6 @@ func _physics_process(delta):
 		queue_free()
 
 func _on_Projectile_body_entered(body):
-		#body.queue_free()
-	var bodyHealth = find_child("Health")
-	if bodyHealth != null:
-		bodyHealth.modify_health(-1*ProjectileVars.Damage)
+	var bodyHealth : Health = body.find_child("Health")
+	bodyHealth.modify_health(-10)
 	queue_free()
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-	
-	
-	

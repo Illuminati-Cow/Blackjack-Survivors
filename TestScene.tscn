@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://csh2f14vv2ers"]
 
-[ext_resource type="PackedScene" uid="uid://74twye6gainy" path="res://Player/projectileScene.tscn" id="2_2h1f6"]
+[ext_resource type="PackedScene" uid="uid://74twye6gainy" path="res://src/projectileScene.tscn" id="2_2h1f6"]
 [ext_resource type="Texture2D" uid="uid://dpqh2nhp5f7wd" path="res://icon.svg" id="2_ksglq"]
 [ext_resource type="Script" path="res://PlayerScript.gd" id="3_s0vpk"]
 

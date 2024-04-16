@@ -23,6 +23,6 @@ func modify_health(amount : int):
 
 	if health < 0:
 		health = 0
-		dead.emit()
+		dead.emit(amount)
 	elif health > max_health:
 		health = max_health
