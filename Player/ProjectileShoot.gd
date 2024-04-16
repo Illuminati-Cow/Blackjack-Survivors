@@ -1,7 +1,7 @@
 extends Area2D
 
 
-
+signal damaged_enemy(damage)
 
 
 # Called when the node enters the scene tree for the first time.
@@ -15,10 +15,15 @@ func _physics_process(delta):
 		queue_free()
 
 func _on_Projectile_body_entered(body):
-		#body.queue_free()
-	var bodyHealth = find_child("Health")
-	if bodyHealth != null:
-		bodyHealth.modify_health(-1*ProjectileVars.Damage)
+	#print(body)
+	var bodyHealth = find_child("Health")#get_node("root/CardEnemy/Health")
+	#print(bodyHealth)
+	if body.has_meta("Player") != true: #bodyHealth != null && 
+		#emit_signal("damaged_enemy", -1*ProjectileVars.damage)
+		bodyHealth.modify_health()
+		#print(bodyHealth)
+		if bodyHealth <=0:
+			body.queue_free()
 	queue_free()
 
 
