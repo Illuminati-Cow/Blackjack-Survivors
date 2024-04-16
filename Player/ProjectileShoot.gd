@@ -15,20 +15,6 @@ func _physics_process(delta):
 		queue_free()
 
 func _on_Projectile_body_entered(body):
-	#print(body)
-	var bodyHealth = find_child("Health")#get_node("root/CardEnemy/Health")
-	#print(bodyHealth)
-	if body.has_meta("Player") != true: #bodyHealth != null && 
-		#emit_signal("damaged_enemy", -1*ProjectileVars.damage)
-		bodyHealth.modify_health()
-		#print(bodyHealth)
-		if bodyHealth <=0:
-			body.queue_free()
+	var bodyHealth : Health = body.find_child("Health")
+	bodyHealth.modify_health(-10)
 	queue_free()
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-	
-	
-	
