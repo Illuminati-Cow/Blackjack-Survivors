@@ -25,14 +25,18 @@ texture = ExtResource("1_bfc4c")
 
 [node name="Player" parent="." instance=ExtResource("2_6li7k")]
 scale = Vector2(0.25, 0.25)
+collision_mask = 2
 ProjectileScene = ExtResource("3_6pwuj")
 metadata/Player = true
 
 [node name="ShootCooldown" type="Timer" parent="Player"]
 one_shot = true
 
-[node name="CardEnemy" parent="." instance=ExtResource("4_rs4ih")]
+[node name="CardEnemy" parent="." node_paths=PackedStringArray("target") instance=ExtResource("4_rs4ih")]
 position = Vector2(661, 165)
+collision_layer = 2
+collision_mask = 3
+target = NodePath("../Player")
 
 [node name="CharacterBody2D2" type="CharacterBody2D" parent="."]
 position = Vector2(452, 312)
@@ -48,7 +52,8 @@ position = Vector2(1.5, -2.5)
 shape = SubResource("RectangleShape2D_57oe1")
 
 [node name="Projectile" parent="." instance=ExtResource("3_6pwuj")]
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.5, 0.5)
+collision_layer = 2
 
 [connection signal="timeout" from="Player/ShootCooldown" to="Player" method="_on_shoot_cooldown_timeout"]
 [connection signal="damaged_enemy" from="Projectile" to="CardEnemy" method="_on_damaged"]

@@ -3,14 +3,14 @@ extends CharacterBody2D
 const GRAVITY = 200.0
 const WALK_SPEED = 200
 @export var ProjectileScene : PackedScene
-@export var fireCooldown = 0.25
+#@export var fireCooldown = 0.25
 var canShoot = true
 
 func _ready():
 	start()
 
 func start():
-	$ShootCooldown.wait_time = fireCooldown
+	$ShootCooldown.wait_time = ProjectileVars.rateOfFire
 
 func _physics_process(delta):
 
