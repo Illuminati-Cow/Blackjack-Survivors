@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://bipydopdpp7he"]
 
-[ext_resource type="Texture2D" uid="uid://dpvy5hcvo8k2g" path="res://1000_F_489045204_OXrFyuwCMBgX8hKQL4LnTZcUoInze4sy.jpg" id="1_bfc4c"]
-[ext_resource type="Script" path="res://Player/GameStart.gd" id="1_lj3li"]
-[ext_resource type="PackedScene" uid="uid://ddp4uto6nwdwy" path="res://Player/Player.tscn" id="2_6li7k"]
+[ext_resource type="Texture2D" uid="uid://dpvy5hcvo8k2g" path="res://assets/1000_F_489045204_OXrFyuwCMBgX8hKQL4LnTZcUoInze4sy.jpg" id="1_bfc4c"]
+[ext_resource type="Script" path="res://src/Player/GameStart.gd" id="1_lj3li"]
+[ext_resource type="PackedScene" uid="uid://ddp4uto6nwdwy" path="res://src/Player/Player.tscn" id="2_6li7k"]
 [ext_resource type="PackedScene" uid="uid://74twye6gainy" path="res://src/projectileScene.tscn" id="3_6pwuj"]
 [ext_resource type="PackedScene" uid="uid://brl5ayeewr368" path="res://src/enemy/card_enemy.res" id="4_rs4ih"]
 [ext_resource type="Script" path="res://src/components/health/health.gd" id="5_am8qw"]
@@ -25,7 +25,6 @@ texture = ExtResource("1_bfc4c")
 
 [node name="Player" parent="." instance=ExtResource("2_6li7k")]
 scale = Vector2(0.25, 0.25)
-ProjectileScene = ExtResource("3_6pwuj")
 metadata/Player = true
 
 [node name="ShootCooldown" type="Timer" parent="Player"]
