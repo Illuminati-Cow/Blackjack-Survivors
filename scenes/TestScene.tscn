@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://csh2f14vv2ers"]
+
+[ext_resource type="PackedScene" uid="uid://74twye6gainy" path="res://src/projectileScene.tscn" id="2_2h1f6"]
+[ext_resource type="Texture2D" uid="uid://dpqh2nhp5f7wd" path="res://icon.svg" id="2_ksglq"]
+[ext_resource type="Script" path="res://PlayerScript.gd" id="3_s0vpk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vre4v"]
+size = Vector2(131, 129)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="PlayerTest" type="CharacterBody2D" parent="."]
+script = ExtResource("3_s0vpk")
+Projectile = ExtResource("2_2h1f6")
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerTest"]
+texture = ExtResource("2_ksglq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerTest"]
+position = Vector2(1.5, 0.5)
+shape = SubResource("RectangleShape2D_vre4v")
+
+[node name="Emitter" type="Marker2D" parent="PlayerTest"]
+position = Vector2(80, 0)
+
+[node name="Camera2D" type="Camera2D" parent="PlayerTest"]
