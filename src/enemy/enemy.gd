@@ -71,6 +71,8 @@ func _on_healed(amount : int):
 
 func _on_damaged(amount : int):
 	print_debug("Damaged: ", amount)
+	var HealthNode = get_node("Health")
+	HealthNode.modify_health(amount)
 	pass
 
 
