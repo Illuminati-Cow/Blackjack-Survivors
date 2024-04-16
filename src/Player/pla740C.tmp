@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bipydopdpp7he"]
 
-[ext_resource type="Texture2D" uid="uid://by0hkci5eh7qj" path="res://1000_F_489045204_OXrFyuwCMBgX8hKQL4LnTZcUoInze4sy.jpg" id="1_bfc4c"]
+[ext_resource type="Texture2D" uid="uid://dpvy5hcvo8k2g" path="res://1000_F_489045204_OXrFyuwCMBgX8hKQL4LnTZcUoInze4sy.jpg" id="1_bfc4c"]
 [ext_resource type="PackedScene" uid="uid://ddp4uto6nwdwy" path="res://Player/Player.tscn" id="2_6li7k"]
 
 [node name="PlayerTest" type="Node2D"]
@@ -15,3 +15,7 @@ scale = Vector2(4.948, 3.764)
 texture = ExtResource("1_bfc4c")
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_6li7k")]
+fireCooldown = null
+
+[node name="ShootCooldown" type="Timer" parent="CharacterBody2D"]
+one_shot = true
