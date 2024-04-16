@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://b3ga5g5rdsb3y"]
+
+[node name="Control" type="Control"]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 768.0
+offset_bottom = 432.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HouseHandCanvas" type="CanvasGroup" parent="."]
+position = Vector2(1467, 120)
+
+[node name="HouseScoreText" type="RichTextLabel" parent="HouseHandCanvas"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -158.0
+offset_bottom = 66.0
+grow_horizontal = 0
+
+[node name="HouseCards" type="Control" parent="HouseHandCanvas"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
