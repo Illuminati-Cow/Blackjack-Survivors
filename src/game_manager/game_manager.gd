@@ -12,7 +12,7 @@ var card_enemy = load("res://src/enemy/card_enemy.res")
 var enemies = [
 	card_enemy
 ]
-@onready var player = root.get_node("PlayerTest")
+@onready var player = root.get_node("MainScene")
 
 # Spawn a random enemy
 func _on_spawn_timer_timeout():
