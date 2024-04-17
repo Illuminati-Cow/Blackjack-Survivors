@@ -18,6 +18,7 @@ var enemies = [
 func _on_spawn_timer_timeout():
 	var enemy := enemies.pick_random().instantiate() as CardEnemy
 	enemy.set_card(blackjack_manager.draw())
+	enemy.death_draw.connect(blackjack_manager._on_death_draw)
 	# WARNING: Change this to spawn around player
 	enemy.position = Vector2(randi_range(-5000, 5000), randi_range(-5000, 5000))
 	enemy.target = player
