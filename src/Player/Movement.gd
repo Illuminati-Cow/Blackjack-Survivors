@@ -18,6 +18,8 @@ func _process(_delta):
 	#print($ShootCooldown.time_left)
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		shoot()
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		get_node("../BlackjackManager")._on_player_stand()
 
 func shoot():
 	if not canShoot:

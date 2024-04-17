@@ -31,9 +31,8 @@ metadata/Player = true
 one_shot = true
 
 [node name="CardEnemy" parent="." instance=ExtResource("4_pp02q")]
+visible = false
 position = Vector2(661, 165)
-collision_layer = 2
-collision_mask = 5
 
 [node name="Projectile" parent="." instance=ExtResource("7_yir3u")]
 
