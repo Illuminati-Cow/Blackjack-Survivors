@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://bipydopdpp7he"]
+
+[ext_resource type="Script" path="res://src/Player/GameStart.gd" id="1_h86w0"]
+[ext_resource type="Texture2D" uid="uid://dpvy5hcvo8k2g" path="res://assets/1000_F_489045204_OXrFyuwCMBgX8hKQL4LnTZcUoInze4sy.jpg" id="2_0sait"]
+[ext_resource type="PackedScene" uid="uid://ddp4uto6nwdwy" path="res://src/Player/Player.tscn" id="3_4xbyh"]
+[ext_resource type="PackedScene" uid="uid://brl5ayeewr368" path="res://src/enemy/card_enemy.res" id="4_pp02q"]
+[ext_resource type="PackedScene" uid="uid://bynrc34h2fksh" path="res://src/blackjack/blackjack_manager.res" id="6_oc8pb"]
+[ext_resource type="PackedScene" uid="uid://74twye6gainy" path="res://src/Player/projectileScene.tscn" id="7_yir3u"]
+
+[node name="PlayerTest" type="Node2D"]
+script = ExtResource("1_h86w0")
+
+[node name="Background" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Background"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/ParallaxLayer"]
+position = Vector2(1974, 1382)
+scale = Vector2(4.948, 3.764)
+texture = ExtResource("2_0sait")
+
+[node name="Player" parent="." instance=ExtResource("3_4xbyh")]
+scale = Vector2(0.25, 0.25)
+collision_mask = 2
+ProjectileScene = ExtResource("7_yir3u")
+metadata/Player = true
+
+[node name="ShootCooldown" type="Timer" parent="Player"]
+one_shot = true
+
+[node name="CardEnemy" parent="." instance=ExtResource("4_pp02q")]
+position = Vector2(661, 165)
+collision_layer = 2
+collision_mask = 5
+
+[node name="Projectile" parent="." instance=ExtResource("7_yir3u")]
+
+[node name="BlackjackManager" parent="." instance=ExtResource("6_oc8pb")]
+
+[connection signal="timeout" from="Player/ShootCooldown" to="Player" method="_on_shoot_cooldown_timeout"]
+[connection signal="damaged_enemy" from="Projectile" to="CardEnemy" method="_on_damaged"]
