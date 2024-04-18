@@ -28,7 +28,7 @@ func shoot():
 	print("shooting projectile")
 	canShoot = false
 	$ShootCooldown.start()
-	if get_node("../Stats").projectileCount > 1.0:
+	if get_node("../Stats").projectileCount >= 2.0:
 		for i in floor(get_node("../Stats").projectileCount):
 			var p1 = ProjectileScene.instantiate()
 			owner.add_child(p1)
