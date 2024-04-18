@@ -203,10 +203,13 @@ func _on_death_draw(card : Card):
 func _on_player_stand():
 	match _compare_hands(player_hand, house_hand):
 		1:
+			print("won!")
 			player_won.emit(player_hand.value())
 		0:
+			print("tie")
 			tied.emit()
 		-1:
+			print("lost")
 			player_lost.emit(player_hand.value())
 	new_hands()
 #endregion
