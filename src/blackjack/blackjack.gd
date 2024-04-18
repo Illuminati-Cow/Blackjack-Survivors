@@ -14,6 +14,7 @@ signal player_hit(card : Card)
 signal player_won(hand_value : int)
 signal player_lost(hand_value : int)
 signal tied
+signal hands_cleared()
 #endregion
 
 enum HandState {
@@ -31,9 +32,9 @@ const bj_number_increment := 10
 const nat_bj_card_count_increment := 1
 const house_stand_num_increment := 10
 
-static var blackjack_number := 21
-static var nat_bj_card_count := 2
-static var house_stand_num := 17
+static var blackjack_number := 41
+static var nat_bj_card_count := 5
+static var house_stand_num := 47
 
 var deck : Deck
 var house_hand : Hand
@@ -42,9 +43,9 @@ var player_hand : Hand
 
 class Card:
 	enum Suit {
+		Spades,
 		Hearts,
 		Clubs,
-		Spades,
 		Diamonds
 	}
 	var suit : Suit
@@ -141,7 +142,7 @@ class Deck:
 		return deck
 
 
-func _init():
+func _ready():
 	deck = Deck.new()
 	player_hand = Hand.new()
 	house_hand = Hand.new()
@@ -151,6 +152,7 @@ func _init():
 func new_hands() -> void:
 	player_hand.clear()
 	house_hand.clear()
+	hands_cleared.emit()
 	# Draw house's hand
 	_draw_house_hand()
 	# Prevent house from getting a Blackjack
@@ -158,7 +160,7 @@ func new_hands() -> void:
 		house_hand.clear()
 		_draw_house_hand()
 	var house_cards : Array[Card] = house_hand.get_cards()
-	for card in house_cards:
+	for card : Card in house_cards:
 		house_hit.emit(card)
 
 
@@ -219,7 +221,7 @@ func _eval_hand(hand : Hand) -> HandState:
 			return HandState.BLACKJACK
 		house_stand_num:
 			return HandState.STANDING
-		_ when hand.value() > 21:
+		_ when hand.value() > blackjack_number:
 			return HandState.BUST
 		_:
 			return HandState.PLAYING
