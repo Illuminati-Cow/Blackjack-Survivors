@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1rswsae06vqf"]
+
+[ext_resource type="Script" path="res://src/Start/gameOver.gd" id="1_tj6qt"]
+
+[node name="GameEnd" type="CanvasLayer"]
+script = ExtResource("1_tj6qt")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 12.787
+anchor_top = 7.062
+anchor_right = 12.787
+anchor_bottom = 7.062
+offset_left = -277.48
+offset_top = -140.48
+offset_right = 277.52
+offset_bottom = 140.52
+text = "Restart"
+
+[connection signal="pressed" from="Control/Button" to="." method="_on_button_pressed"]

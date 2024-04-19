@@ -34,11 +34,16 @@ func toggle_pause():
 	else:
 		Engine.time_scale = 1
 
+get_tree().paused = true
 
 # Overriding _input to listen for pause key presses
-func _input(event):
-	if event.is_action_just_pressed("pause") and !get_tree().is_paused():
-		toggle_pause()
+func _on_pause_button_pressed():
+	get_tree().paused = true
+	show()
+	
+func _on_close_button_pressed():
+	hide()
+	get_tree().paused = false
 
 #/func _ready():
 	#print("spawning enemies (start of game)")
