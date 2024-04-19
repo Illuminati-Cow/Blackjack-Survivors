@@ -1,0 +1,62 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3ga5g5rdsb3y"]
+
+[ext_resource type="Script" path="res://src/ui/ui_hand.gd" id="3_nr0xg"]
+[ext_resource type="PackedScene" uid="uid://bynrc34h2fksh" path="res://src/blackjack/blackjack_manager.res" id="4_re88p"]
+
+[node name="UIRoot" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerHand" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 946.0
+offset_top = 449.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(2, 0)
+script = ExtResource("3_nr0xg")
+
+[node name="SpawnLocation" type="Marker2D" parent="PlayerHand"]
+position = Vector2(110, 116)
+
+[node name="ColorRect" type="ColorRect" parent="PlayerHand"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HouseHand" type="Control" parent="."]
+modulate = Color(1, 0.980392, 0.945098, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 959.0
+offset_bottom = -447.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_nr0xg")
+fall_scale = 5.0
+
+[node name="SpawnLocation" type="Marker2D" parent="HouseHand"]
+position = Vector2(116, 139)
+
+[node name="PlayerStats" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BlackjackManager" parent="." instance=ExtResource("4_re88p")]
+
+[connection signal="house_hit" from="BlackjackManager" to="HouseHand" method="_on_blackjack_manager_house_hit"]
+[connection signal="player_hit" from="BlackjackManager" to="PlayerHand" method="on_player_card_drawn"]
