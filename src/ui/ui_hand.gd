@@ -29,7 +29,7 @@ var _original_size : Vector2
 
 func _ready():
 	_original_size = size
-	assert(gm != null)
+	#assert(gm != null)
 
 
 func _process(delta):
@@ -100,6 +100,7 @@ func _on_blackjack_manager_house_hit(card, hand_value):
 
 func _on_blackjack_manager_player_hit(card, hand_value):
 	if is_player:
+		print("test")
 		_card_queue.append(create_card(get_card_texture(card)))
 		$ScoreText.text = str(hand_value as int)
 

@@ -24,6 +24,7 @@ var waveNum := 1 as int
 func _ready():
 	# Connect UI to BlackjackManager
 	var p_h = root.find_child("PlayerHand") as HandDisplay
+	assert(p_h != null)
 	var h_h = root.find_child("HouseHand") as HandDisplay
 	var hlth_d = root.find_child("HealthDisplay") as HealthDisplay
 	var stats = root.find_child("Stats") as StatsDisplay

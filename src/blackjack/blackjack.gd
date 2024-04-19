@@ -32,9 +32,9 @@ const bj_number_increment := 10
 const nat_bj_card_count_increment := 1
 const house_stand_num_increment := 10
 
-static var blackjack_number := 41
-static var nat_bj_card_count := 5
-static var house_stand_num := 47
+static var blackjack_number := 21
+static var nat_bj_card_count := 2
+static var house_stand_num := 17
 
 var deck : Deck
 var house_hand : Hand
