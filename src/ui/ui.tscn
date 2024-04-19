@@ -58,7 +58,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/normal_font_size = 40
 bbcode_enabled = true
-text = "[center]21[/center]"
+text = "[center]0[/center]"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
@@ -115,7 +115,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/normal_font_size = 40
 bbcode_enabled = true
-text = "[center]21[/center]"
+text = "[center]0[/center]"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
@@ -135,7 +135,9 @@ stretch_mode = 4
 script = ExtResource("4_pa7fw")
 
 [node name="Stats" type="Control" parent="."]
+layout_mode = 1
 anchors_preset = 0
+offset_left = 7.0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("5_rlmwh")
