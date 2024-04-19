@@ -1,15 +1,24 @@
-[gd_scene load_steps=8 format=3 uid="uid://bipydopdpp7he"]
+[gd_scene load_steps=13 format=3 uid="uid://bipydopdpp7he"]
 
-[ext_resource type="Script" path="res://src/Player/GameStart.gd" id="1_h86w0"]
 [ext_resource type="Texture2D" uid="uid://dpvy5hcvo8k2g" path="res://assets/1000_F_489045204_OXrFyuwCMBgX8hKQL4LnTZcUoInze4sy.jpg" id="2_0sait"]
 [ext_resource type="PackedScene" uid="uid://ddp4uto6nwdwy" path="res://src/Player/Player.tscn" id="3_4xbyh"]
 [ext_resource type="PackedScene" uid="uid://bynrc34h2fksh" path="res://src/blackjack/blackjack_manager.res" id="6_oc8pb"]
 [ext_resource type="Script" path="res://projectile_vars.gd" id="7_0qrgv"]
+[ext_resource type="Script" path="res://src/ui/ui_hand.gd" id="7_8u5si"]
 [ext_resource type="PackedScene" uid="uid://74twye6gainy" path="res://src/Player/projectileScene.tscn" id="7_yir3u"]
+[ext_resource type="Script" path="res://src/ui/HouseText.gd" id="8_qs8no"]
+[ext_resource type="Texture2D" uid="uid://cxy2jyhdluncj" path="res://assets/cards_spritesheet.png" id="8_shhl8"]
+[ext_resource type="Script" path="res://src/ui/ScoreText.gd" id="9_5icqm"]
 [ext_resource type="PackedScene" uid="uid://iu1hmefbguyx" path="res://src/game_manager/game_manager.res" id="9_6arva"]
+[ext_resource type="Script" path="res://src/ui/health_display.gd" id="9_i6d2n"]
 
-[node name="PlayerTest" type="Node2D"]
-script = ExtResource("1_h86w0")
+[sub_resource type="AtlasTexture" id="AtlasTexture_6uhtt"]
+atlas = ExtResource("8_shhl8")
+region = Rect2(130, 80, 65, 80)
+
+[node name="PlayerTest" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 
 [node name="Background" type="ParallaxBackground" parent="."]
 
@@ -38,7 +47,132 @@ script = ExtResource("7_0qrgv")
 
 [node name="GameManager" parent="." instance=ExtResource("9_6arva")]
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HouseHand" type="Control" parent="CanvasLayer/Control"]
+modulate = Color(1, 0.980392, 0.945098, 1)
+layout_mode = 1
+anchor_left = 0.782
+anchor_right = 1.0
+anchor_bottom = 0.296
+offset_left = 0.135925
+offset_bottom = 0.192001
+grow_horizontal = 0
+script = ExtResource("7_8u5si")
+card_spread_angle = 10.0
+card_scale = 1.2
+
+[node name="SpawnLocation" type="Marker2D" parent="CanvasLayer/Control/HouseHand"]
+position = Vector2(132, 86)
+
+[node name="HouseNum" type="RichTextLabel" parent="CanvasLayer/Control/HouseHand"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 989.292
+offset_top = 162.968
+offset_right = 1035.29
+offset_bottom = 217.968
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[center]21[/center]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="HouseText" type="RichTextLabel" parent="CanvasLayer/Control/HouseHand"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.5
+offset_top = -198.0
+offset_right = 100.5
+offset_bottom = -143.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[center]House[/center]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+script = ExtResource("8_qs8no")
+
+[node name="PlayerHand" type="Control" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+pivot_offset = Vector2(2, 0)
+script = ExtResource("7_8u5si")
+card_spread_angle = 10.0
+card_scale = 1.2
+
+[node name="SpawnLocation" type="Marker2D" parent="CanvasLayer/Control/PlayerHand"]
+position = Vector2(-132, -132)
+
+[node name="ScoreText" type="RichTextLabel" parent="CanvasLayer/Control/PlayerHand"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 990.0
+offset_top = 461.0
+offset_right = 1036.0
+offset_bottom = 516.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[center]21[/center]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+script = ExtResource("9_5icqm")
+
+[node name="PlayerStats" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthDisplay" type="TextureRect" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 422.0
+offset_top = -94.0
+offset_right = 487.0
+offset_bottom = -14.0
+grow_horizontal = 2
+scale = Vector2(2.33195, 2.33195)
+texture = SubResource("AtlasTexture_6uhtt")
+stretch_mode = 4
+script = ExtResource("9_i6d2n")
+
 [connection signal="timeout" from="Player/ShootCooldown" to="Player" method="_on_shoot_cooldown_timeout"]
+[connection signal="house_hit" from="BlackjackManager" to="CanvasLayer/Control/HouseHand" method="_on_blackjack_manager_house_hit"]
+[connection signal="player_hit" from="BlackjackManager" to="CanvasLayer/Control/PlayerHand" method="_on_blackjack_manager_player_hit"]
 [connection signal="player_lost" from="BlackjackManager" to="Stats" method="_minorDecrease"]
 [connection signal="player_lost" from="BlackjackManager" to="GameManager" method="_spawn_big_enemy"]
 [connection signal="player_won" from="BlackjackManager" to="Stats" method="_minorIncrease"]

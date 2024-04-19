@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3ga5g5rdsb3y"]
+[gd_scene load_steps=6 format=3 uid="uid://b3ga5g5rdsb3y"]
 
+[ext_resource type="Script" path="res://src/ui/SignalRelay.gd" id="1_m31ec"]
 [ext_resource type="Texture2D" uid="uid://cxy2jyhdluncj" path="res://assets/cards_spritesheet.png" id="2_8b4u5"]
 [ext_resource type="Script" path="res://src/ui/ui_hand.gd" id="3_nr0xg"]
 [ext_resource type="Script" path="res://src/ui/health_display.gd" id="4_pa7fw"]
@@ -15,6 +16,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_m31ec")
 
 [node name="HouseHand" type="Control" parent="."]
 modulate = Color(1, 0.980392, 0.945098, 1)
@@ -88,7 +90,6 @@ card_scale = 1.2
 
 [node name="SpawnLocation" type="Marker2D" parent="PlayerHand"]
 position = Vector2(-132, -132)
-
 
 [node name="ScoreText" type="RichTextLabel" parent="PlayerHand"]
 layout_mode = 1
