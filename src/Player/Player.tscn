@@ -1,23 +1,42 @@
-[gd_scene load_steps=4 format=3 uid="uid://ddp4uto6nwdwy"]
+[gd_scene load_steps=5 format=3 uid="uid://ddp4uto6nwdwy"]
 
 [ext_resource type="Script" path="res://src/Player/Movement.gd" id="1_1xkx1"]
-[ext_resource type="Texture2D" uid="uid://c173bror4xubd" path="res://assets/6039837409_25b5a69a1b_b.jpg" id="2_k5co2"]
+[ext_resource type="Texture2D" uid="uid://f0c5yfy5igip" path="res://assets/poker_chip_guy.png" id="2_hydvo"]
+[ext_resource type="Script" path="res://src/components/health/health.gd" id="3_r3ban"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jugda"]
-size = Vector2(466, 318)
+[sub_resource type="CircleShape2D" id="CircleShape2D_1dbyh"]
+radius = 174.0
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_1xkx1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(111, 33)
-shape = SubResource("RectangleShape2D_jugda")
+shape = SubResource("CircleShape2D_1dbyh")
 debug_color = Color(0.537255, 0.176471, 0.498039, 0.419608)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(112, 33)
-scale = Vector2(0.449219, 0.421938)
-texture = ExtResource("2_k5co2")
+rotation = 1.5708
+scale = Vector2(5.40757, 5.07917)
+texture = ExtResource("2_hydvo")
 
 [node name="Emitter" type="Marker2D" parent="."]
-position = Vector2(330, 20)
+position = Vector2(0, -194)
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("3_r3ban")
+max_health = 3
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_1dbyh")
+debug_color = Color(0.537255, 0.176471, 0.498039, 0.419608)
+
+[node name="InvincibilityTimer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[connection signal="dead" from="Health" to="." method="_on_health_dead"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]

@@ -3,17 +3,18 @@ class_name Blackjack extends Node
 # Cole Falxa-Sturken 4/15/2024
 
 #region Signals
-signal house_hit(card : Card)
+signal house_hit(card : Card, hand_value : int)
 #signal house_blackjack
 signal house_busted
 #signal house_stand
 signal player_busted
 signal player_nat_blackjack
 signal player_blackjack
-signal player_hit(card : Card)
+signal player_hit(card : Card, hand_value : int)
 signal player_won(hand_value : int)
 signal player_lost(hand_value : int)
 signal tied
+signal hands_cleared()
 #endregion
 
 enum HandState {
@@ -38,13 +39,14 @@ static var house_stand_num := 17
 var deck : Deck
 var house_hand : Hand
 var player_hand : Hand
+var hands_locked : bool = false
 
 
 class Card:
 	enum Suit {
+		Spades,
 		Hearts,
 		Clubs,
-		Spades,
 		Diamonds
 	}
 	var suit : Suit
@@ -116,6 +118,7 @@ class Deck:
 	
 	func _init():
 		cards = _create_deck()
+		shuffle()
 		
 	func count() -> int:
 		return cards.size()
@@ -141,25 +144,31 @@ class Deck:
 		return deck
 
 
-func _init():
+func _ready():
 	deck = Deck.new()
 	player_hand = Hand.new()
 	house_hand = Hand.new()
 	new_hands()
 
-
+# Empties both hands and draws the house's hand
+# NOTE: Also unlocks both hands
 func new_hands() -> void:
+	hands_locked = false
 	player_hand.clear()
 	house_hand.clear()
+	hands_cleared.emit()
 	# Draw house's hand
-	_draw_house_hand()
-	# Prevent house from getting a Blackjack
-	while _eval_hand(house_hand) != HandState.STANDING:
+	var hand_vals := _draw_house_hand()
+	# Prevent house from getting a Natural Blackjack
+	var eval = _eval_hand(house_hand)
+	while eval == HandState.NATURAL_BLACKJACK:
 		house_hand.clear()
-		_draw_house_hand()
+		hand_vals = _draw_house_hand()
+		eval = _eval_hand(house_hand)
 	var house_cards : Array[Card] = house_hand.get_cards()
-	for card in house_cards:
-		house_hit.emit(card)
+	var val = house_hand.value()
+	for card : Card in house_cards:
+		house_hit.emit(card, hand_vals.pop_front())
 
 
 func draw() -> Card:
@@ -174,33 +183,35 @@ static func increment_bj_number():
 
 #region Signal Receivers
 func _on_death_draw(card : Card):
+	if hands_locked:
+		return
+		
 	player_hand.add(card)
+	player_hit.emit(card, player_hand.value())
 	match _eval_hand(player_hand):
 		HandState.NATURAL_BLACKJACK:
 			player_nat_blackjack.emit()
-			new_hands()
 		HandState.BLACKJACK:
 			player_blackjack.emit()
-			new_hands()
 		HandState.BUST:
 			player_busted.emit()
-			new_hands()
 	# Check for marginal victory if obvious victory not present
 	# NOTE: Assumes that house draws full hand before player
 	if player_hand.value() >= house_hand.value():
 		match _compare_hands(player_hand, house_hand):
 			1:
 				player_won.emit(player_hand.value())
-				new_hands()
 			0:
 				tied.emit()
-				new_hands()
 			-1:
 				player_lost.emit(player_hand.value())
-				new_hands()
+		hands_locked = true
 
 
 func _on_player_stand():
+	if hands_locked:
+		return
+		
 	match _compare_hands(player_hand, house_hand):
 		1:
 			print("won!")
@@ -211,19 +222,21 @@ func _on_player_stand():
 		-1:
 			print("lost")
 			player_lost.emit(player_hand.value())
-	new_hands()
+	hands_locked = true
 #endregion
 
+
 func _eval_hand(hand : Hand) -> HandState:
-	match hand.value():
+	var val = hand.value()
+	match val:
 		blackjack_number when hand.count() == nat_bj_card_count:
 			return HandState.NATURAL_BLACKJACK
 		blackjack_number:
 			return HandState.BLACKJACK
-		house_stand_num:
-			return HandState.STANDING
-		_ when hand.value() > 21:
+		_ when val > blackjack_number:
 			return HandState.BUST
+		_ when val >= house_stand_num:
+			return HandState.STANDING
 		_:
 			return HandState.PLAYING
 
@@ -234,8 +247,12 @@ func _compare_hands(hand_a : Hand, hand_b : Hand):
 	var b_val = hand_b.value()
 	return 1 if a_val > b_val else 0 if a_val == b_val else -1
 
+
 # NOTE: Assumes that house draws until stand or win/loss
-func _draw_house_hand() -> void:
+# Returns an array of hand values where each index is the value after each draw
+func _draw_house_hand() -> Array[int]:
+	var hand_values := []
 	while _eval_hand(house_hand) == HandState.PLAYING:
 		house_hand.add(deck.draw_card())
-
+		hand_values.append(house_hand.value())
+	return hand_values

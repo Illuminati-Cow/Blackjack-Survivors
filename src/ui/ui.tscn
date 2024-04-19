@@ -1,0 +1,222 @@
+[gd_scene load_steps=10 format=3 uid="uid://b3ga5g5rdsb3y"]
+
+[ext_resource type="Texture2D" uid="uid://cxy2jyhdluncj" path="res://assets/cards_spritesheet.png" id="2_8b4u5"]
+[ext_resource type="Script" path="res://src/ui/ui_hand.gd" id="3_nr0xg"]
+[ext_resource type="Script" path="res://src/ui/health_display.gd" id="4_pa7fw"]
+[ext_resource type="Script" path="res://src/ui/ui_stats.gd" id="5_rlmwh"]
+[ext_resource type="Texture2D" uid="uid://xjvu8rj3isof" path="res://assets/bullet_count_icon.png" id="5_sselv"]
+[ext_resource type="Texture2D" uid="uid://ckeisphtamqe8" path="res://assets/bullet_speed_icon.png" id="6_346j3"]
+[ext_resource type="Texture2D" uid="uid://cap8vrohyu8g5" path="res://assets/bullet_spread_icon.png" id="7_u1u84"]
+[ext_resource type="Texture2D" uid="uid://dtgylxytuntep" path="res://assets/bullet_damage_icon.png" id="8_7bl74"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bfqx3"]
+atlas = ExtResource("2_8b4u5")
+region = Rect2(130, 80, 65, 80)
+
+[node name="UIRoot" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HouseHand" type="Control" parent="."]
+modulate = Color(1, 0.980392, 0.945098, 1)
+layout_mode = 1
+anchor_left = 0.782
+anchor_right = 1.0
+anchor_bottom = 0.296
+offset_left = 0.135925
+offset_bottom = 0.192001
+grow_horizontal = 0
+script = ExtResource("3_nr0xg")
+card_spread_angle = 10.0
+card_scale = 1.2
+
+[node name="SpawnLocation" type="Marker2D" parent="HouseHand"]
+position = Vector2(132, 86)
+
+[node name="ScoreText" type="RichTextLabel" parent="HouseHand"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 21.452
+offset_top = -34.312
+offset_right = 67.452
+offset_bottom = 20.688
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[center]0[/center]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="HouseText" type="RichTextLabel" parent="HouseHand"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.5
+offset_top = -198.0
+offset_right = 100.5
+offset_bottom = -143.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[center]House[/center]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="PlayerHand" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+pivot_offset = Vector2(2, 0)
+script = ExtResource("3_nr0xg")
+card_spread_angle = 10.0
+card_scale = 1.2
+
+[node name="SpawnLocation" type="Marker2D" parent="PlayerHand"]
+position = Vector2(-132, -132)
+
+[node name="ScoreText" type="RichTextLabel" parent="PlayerHand"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -96.0
+offset_top = -58.0
+offset_right = -50.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[center]0[/center]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="HealthDisplay" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -65.0
+offset_top = -125.0
+offset_bottom = -45.0
+grow_horizontal = 2
+scale = Vector2(2.33195, 2.33195)
+texture = SubResource("AtlasTexture_bfqx3")
+stretch_mode = 4
+script = ExtResource("4_pa7fw")
+
+[node name="Stats" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 7.0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_rlmwh")
+
+[node name="BulletCount" type="RichTextLabel" parent="Stats"]
+layout_mode = 2
+offset_left = 44.0
+offset_top = 77.0
+offset_right = 148.0
+offset_bottom = 100.0
+text = "100%"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="BulletSpeed" type="RichTextLabel" parent="Stats"]
+layout_mode = 2
+offset_left = 44.0
+offset_top = 113.0
+offset_right = 148.0
+offset_bottom = 136.0
+text = "100%"
+fit_content = true
+autowrap_mode = 0
+
+[node name="BulletSpread" type="RichTextLabel" parent="Stats"]
+layout_mode = 2
+offset_left = 44.0
+offset_top = 149.0
+offset_right = 148.0
+offset_bottom = 172.0
+text = "100%"
+fit_content = true
+autowrap_mode = 0
+
+[node name="BulletDamage" type="RichTextLabel" parent="Stats"]
+layout_mode = 2
+offset_left = 44.0
+offset_top = 186.0
+offset_right = 148.0
+offset_bottom = 209.0
+text = "100%"
+fit_content = true
+autowrap_mode = 0
+
+[node name="CountIcon" type="TextureRect" parent="Stats"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_top = 73.0
+offset_right = 32.0
+offset_bottom = 105.0
+size_flags_horizontal = 4
+texture = ExtResource("5_sselv")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="SpeedIcon" type="TextureRect" parent="Stats"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_top = 109.0
+offset_right = 32.0
+offset_bottom = 141.0
+size_flags_horizontal = 4
+texture = ExtResource("6_346j3")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="SpreadIcon" type="TextureRect" parent="Stats"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_top = 145.0
+offset_right = 32.0
+offset_bottom = 177.0
+size_flags_horizontal = 4
+texture = ExtResource("7_u1u84")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="DamageIcon" type="TextureRect" parent="Stats"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_top = 181.0
+offset_right = 32.0
+offset_bottom = 213.0
+size_flags_horizontal = 4
+texture = ExtResource("8_7bl74")
+expand_mode = 2
+stretch_mode = 4

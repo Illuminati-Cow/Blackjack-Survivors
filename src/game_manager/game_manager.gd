@@ -4,6 +4,7 @@ extends Node
 var root = get_tree().current_scene
 @onready
 var blackjack_manager = root.get_node("BlackjackManager") as Blackjack
+
 # WARNING: This is temporary, it likely needs to be refactored so that types are
 # obvious and scripts are easily accesible. Also needs to use weighted random.
 @onready
@@ -16,44 +17,26 @@ var enemies = [
 var bigEnemies = [
 	big_enemy
 ]
-@onready var player = root.get_node("Player")
+@onready var player = root.get_node("Player") as Player
+
 
 var waveNum := 1 as int
 
-# Pause menu variables
-@onready var pause_menu = $PauseMenu
-var paused = false
 
-# Function to toggle pause state and display the pause menu
-func toggle_pause():
-	paused = !paused
-	pause_menu.visible = paused
-	get_tree().set_pause(paused)
-	if paused:
-		Engine.time_scale = 0
-	else:
-		Engine.time_scale = 1
+func _ready():
+	# Connect UI to BlackjackManager
+	var p_h = root.find_child("PlayerHand") as HandDisplay
+	assert(p_h != null)
+	var h_h = root.find_child("HouseHand") as HandDisplay
+	var hlth_d = root.find_child("HealthDisplay") as HealthDisplay
+	var stats = root.find_child("Stats") as StatsDisplay
+	blackjack_manager.player_hit.connect(p_h._on_blackjack_manager_player_hit)
+	blackjack_manager.house_hit.connect(h_h._on_blackjack_manager_house_hit)
+	p_h.ui_done.connect(on_ui_done)
+	h_h.ui_done.connect(on_ui_done)
+	player.dead.connect(_on_player_dead)
+	player.health_changed.connect(hlth_d._on_health_change)
 
-get_tree().paused = true
-
-# Overriding _input to listen for pause key presses
-func _on_pause_button_pressed():
-	get_tree().paused = true
-	show()
-	
-func _on_close_button_pressed():
-	hide()
-	get_tree().paused = false
-
-#/func _ready():
-	#print("spawning enemies (start of game)")
-	#var enemy := enemies.pick_random().instantiate() as CardEnemy
-	#enemy.set_card(blackjack_manager.draw())
-	#enemy.death_draw.connect(blackjack_manager._on_death_draw)
-	# WARNING: Change this to spawn around player
-	#enemy.position = Vector2(randi_range(-100, 1300), randi_range(-100, 1300))
-	#enemy.target = player
-	#root.add_child(enemy)
 
 # Spawn a random enemy
 func _on_spawn_timer_timeout():
@@ -68,6 +51,7 @@ func _on_spawn_timer_timeout():
 		root.add_child(enemy)
 	waveNum += 1
 
+
 func _spawn_big_enemy(hand):
 	var bigEnemy := big_enemy.instantiate() as Enemy #enemies.pick_random().instantiate() as CardEnemy
 	bigEnemy.position = Vector2(randi_range(100, 1000), randi_range(100, 1000))
@@ -75,3 +59,14 @@ func _spawn_big_enemy(hand):
 	root.add_child(bigEnemy)
 	print("spawned big enemy")
 	print(bigEnemy.position)
+
+
+func on_ui_done():
+	blackjack_manager.new_hands()
+
+
+func _on_player_dead():
+	get_tree().paused = true
+	print_debug("Player Dead : Game Over!")
+  
+ 

@@ -1,0 +1,53 @@
+[gd_scene load_steps=9 format=3 uid="uid://bipydopdpp7he"]
+
+[ext_resource type="Texture2D" uid="uid://dpvy5hcvo8k2g" path="res://assets/1000_F_489045204_OXrFyuwCMBgX8hKQL4LnTZcUoInze4sy.jpg" id="1_bfc4c"]
+[ext_resource type="Script" path="res://src/Player/GameStart.gd" id="1_lj3li"]
+[ext_resource type="PackedScene" uid="uid://ddp4uto6nwdwy" path="res://src/Player/Player.tscn" id="2_6li7k"]
+[ext_resource type="PackedScene" uid="uid://74twye6gainy" path="res://src/projectileScene.tscn" id="3_6pwuj"]
+[ext_resource type="PackedScene" uid="uid://brl5ayeewr368" path="res://src/enemy/card_enemy.res" id="4_rs4ih"]
+[ext_resource type="Script" path="res://src/components/health/health.gd" id="5_am8qw"]
+[ext_resource type="Texture2D" uid="uid://dpqh2nhp5f7wd" path="res://icon.svg" id="5_p7rim"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_57oe1"]
+size = Vector2(129, 127)
+
+[node name="PlayerTest" type="Node2D"]
+script = ExtResource("1_lj3li")
+
+[node name="Background" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Background"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/ParallaxLayer"]
+position = Vector2(1974, 1382)
+scale = Vector2(4.948, 3.764)
+texture = ExtResource("1_bfc4c")
+
+[node name="Player" parent="." instance=ExtResource("2_6li7k")]
+scale = Vector2(0.25, 0.25)
+metadata/Player = true
+
+[node name="ShootCooldown" type="Timer" parent="Player"]
+one_shot = true
+
+[node name="CardEnemy" parent="." instance=ExtResource("4_rs4ih")]
+position = Vector2(661, 165)
+
+[node name="CharacterBody2D2" type="CharacterBody2D" parent="."]
+position = Vector2(452, 312)
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D2"]
+texture = ExtResource("5_p7rim")
+
+[node name="Health" type="Node" parent="CharacterBody2D2/Sprite2D"]
+script = ExtResource("5_am8qw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D2"]
+position = Vector2(1.5, -2.5)
+shape = SubResource("RectangleShape2D_57oe1")
+
+[node name="Projectile" parent="." instance=ExtResource("3_6pwuj")]
+scale = Vector2(0.25, 0.25)
+
+[connection signal="timeout" from="Player/ShootCooldown" to="Player" method="_on_shoot_cooldown_timeout"]
+[connection signal="damaged_enemy" from="Projectile" to="CardEnemy" method="_on_damaged"]
