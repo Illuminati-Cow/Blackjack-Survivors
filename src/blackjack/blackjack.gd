@@ -4,7 +4,7 @@ class_name Blackjack extends Node
 
 #region Signals
 signal house_hit(card : Card, hand_value : int)
-#signal house_blackjack
+signal house_blackjack
 signal house_busted
 #signal house_stand
 signal player_busted
@@ -167,6 +167,10 @@ func new_hands() -> void:
 		eval = _eval_hand(house_hand)
 	var house_cards : Array[Card] = house_hand.get_cards()
 	var val = house_hand.value()
+	if eval == HandState.BUST:
+		house_busted.emit()
+	if eval == HandState.BLACKJACK:
+		house_blackjack.emit()
 	for card : Card in house_cards:
 		house_hit.emit(card, hand_vals.pop_front())
 
@@ -197,15 +201,6 @@ func _on_death_draw(card : Card):
 			player_busted.emit()
 	# Check for marginal victory if obvious victory not present
 	# NOTE: Assumes that house draws full hand before player
-	if player_hand.value() >= house_hand.value():
-		match _compare_hands(player_hand, house_hand):
-			1:
-				player_won.emit(player_hand.value())
-			0:
-				tied.emit()
-			-1:
-				player_lost.emit(player_hand.value())
-		hands_locked = true
 
 
 func _on_player_stand():
@@ -222,7 +217,7 @@ func _on_player_stand():
 		-1:
 			print("lost")
 			player_lost.emit(player_hand.value())
-	new_hands()
+	hands_locked = true
 #endregion
 
 

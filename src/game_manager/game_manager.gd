@@ -18,7 +18,7 @@ var bigEnemies = [
 	big_enemy
 ]
 @onready var player = root.get_node("Player") as Player
-
+@onready var win_text = root.find_child("WinLoseText") as WinLoseText
 var waveNum := 1 as int
 
 # Pause menu variables
@@ -59,6 +59,16 @@ func _ready():
 	blackjack_manager.house_hit.connect(h_h._on_blackjack_manager_house_hit)
 	blackjack_manager.hands_cleared.connect(h_h._on_blackjack_manager_hands_cleared)
 	blackjack_manager.hands_cleared.connect(p_h._on_blackjack_manager_hands_cleared)
+	
+	blackjack_manager.player_nat_blackjack.connect(win_text.player_nat_blackjack)
+	blackjack_manager.player_blackjack.connect(win_text.player_blackjack)
+	blackjack_manager.house_blackjack.connect(win_text.house_blackjack)
+	blackjack_manager.player_busted.connect(win_text.player_bust)
+	blackjack_manager.house_busted.connect(win_text.house_bust)
+	blackjack_manager.player_won.connect(win_text.player_win)
+	blackjack_manager.player_lost.connect(win_text.player_lost)
+	blackjack_manager.tied.connect(win_text.tied)
+	
 	p_h.ui_done.connect(_on_ui_done)
 	h_h.ui_done.connect(_on_ui_done)
 	player.dead.connect(_on_player_dead)
@@ -67,6 +77,7 @@ func _ready():
 	pause_menu.resumed.connect(_on_resumed)
 	pause_menu.visible = false
 	blackjack_manager.new_hands()
+	win_text.ui_done.connect(_on_ui_done)
 
 
 # Spawn a random enemy

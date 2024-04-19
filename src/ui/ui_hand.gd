@@ -120,3 +120,4 @@ func _on_blackjack_manager_hands_cleared():
 		tween.tween_property(card, "rotation", rotation_degrees * 2, 0.4)
 		tween.chain().tween_callback(card.queue_free)
 	_cards.clear()
+	$ScoreText.text = "0"

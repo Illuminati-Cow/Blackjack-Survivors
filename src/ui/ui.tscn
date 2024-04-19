@@ -226,11 +226,18 @@ stretch_mode = 4
 
 [node name="WinLoseText" type="Control" parent="."]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 1117.0
+offset_top = 370.0
+offset_right = 1157.0
+offset_bottom = 410.0
 script = ExtResource("9_k1gaj")
 
 [node name="WinLoseTextBox" type="RichTextLabel" parent="WinLoseText"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 24.0
+offset_top = 14.0
+offset_right = 106.0
+offset_bottom = 54.0
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
