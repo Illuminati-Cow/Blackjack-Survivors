@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b3ga5g5rdsb3y"]
+[gd_scene load_steps=11 format=3 uid="uid://b3ga5g5rdsb3y"]
 
 [ext_resource type="Texture2D" uid="uid://cxy2jyhdluncj" path="res://assets/cards_spritesheet.png" id="2_8b4u5"]
 [ext_resource type="Script" path="res://src/ui/ui_hand.gd" id="3_nr0xg"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://ckeisphtamqe8" path="res://assets/bullet_speed_icon.png" id="6_346j3"]
 [ext_resource type="Texture2D" uid="uid://cap8vrohyu8g5" path="res://assets/bullet_spread_icon.png" id="7_u1u84"]
 [ext_resource type="Texture2D" uid="uid://dtgylxytuntep" path="res://assets/bullet_damage_icon.png" id="8_7bl74"]
+[ext_resource type="Script" path="res://src/ui/WinLoseText.gd" id="9_k1gaj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bfqx3"]
 atlas = ExtResource("2_8b4u5")
@@ -222,3 +223,14 @@ size_flags_horizontal = 4
 texture = ExtResource("8_7bl74")
 expand_mode = 2
 stretch_mode = 4
+
+[node name="WinLoseText" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("9_k1gaj")
+
+[node name="WinLoseTextBox" type="RichTextLabel" parent="WinLoseText"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
