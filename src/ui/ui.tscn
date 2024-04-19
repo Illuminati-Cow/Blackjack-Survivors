@@ -89,6 +89,7 @@ card_scale = 1.2
 [node name="SpawnLocation" type="Marker2D" parent="PlayerHand"]
 position = Vector2(-132, -132)
 
+
 [node name="ScoreText" type="RichTextLabel" parent="PlayerHand"]
 layout_mode = 1
 anchors_preset = 7
