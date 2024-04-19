@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3ga5g5rdsb3y"]
+[gd_scene load_steps=5 format=3 uid="uid://b3ga5g5rdsb3y"]
 
 [ext_resource type="Texture2D" uid="uid://cxy2jyhdluncj" path="res://assets/cards_spritesheet.png" id="2_8b4u5"]
 [ext_resource type="Script" path="res://src/ui/ui_hand.gd" id="3_nr0xg"]
 [ext_resource type="Script" path="res://src/ui/health_display.gd" id="4_pa7fw"]
-[ext_resource type="PackedScene" uid="uid://bynrc34h2fksh" path="res://src/blackjack/blackjack_manager.res" id="4_re88p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bfqx3"]
 atlas = ExtResource("2_8b4u5")
@@ -88,7 +87,8 @@ card_spread_angle = 10.0
 card_scale = 1.2
 
 [node name="SpawnLocation" type="Marker2D" parent="PlayerHand"]
-position = Vector2(-119, -116)
+position = Vector2(-132, -132)
+
 
 [node name="ScoreText" type="RichTextLabel" parent="PlayerHand"]
 layout_mode = 1
@@ -115,8 +115,6 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="BlackjackManager" parent="." instance=ExtResource("4_re88p")]
-
 [node name="HealthDisplay" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = -1
@@ -130,7 +128,3 @@ scale = Vector2(2.33195, 2.33195)
 texture = SubResource("AtlasTexture_bfqx3")
 stretch_mode = 4
 script = ExtResource("4_pa7fw")
-
-[connection signal="hands_cleared" from="BlackjackManager" to="HouseHand" method="_on_blackjack_manager_hands_cleared"]
-[connection signal="house_hit" from="BlackjackManager" to="HouseHand" method="_on_blackjack_manager_house_hit"]
-[connection signal="player_hit" from="BlackjackManager" to="PlayerHand" method="on_player_card_drawn"]

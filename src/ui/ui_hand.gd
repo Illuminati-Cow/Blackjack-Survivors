@@ -4,6 +4,8 @@ extends Control
 
 @onready
 var card_spritesheet : Texture2D = preload("res://assets/cards_spritesheet.png")
+@export 
+var is_player = false
 @export
 var texture_region_size : Vector2i = Vector2i(65, 80)
 @export_range(0, 30)
@@ -88,8 +90,13 @@ func create_card(texture : Texture2D) -> TextureRect:
 
 
 func _on_blackjack_manager_house_hit(card):
-	print_debug(card.rank)
-	_card_queue.append(create_card(get_card_texture(card)))
+	if not is_player:
+		_card_queue.append(create_card(get_card_texture(card)))
+
+
+func _on_blackjack_manager_player_hit(card):
+	if is_player:
+		_card_queue.append(create_card(get_card_texture(card)))
 
 
 func _on_blackjack_manager_hands_cleared():
