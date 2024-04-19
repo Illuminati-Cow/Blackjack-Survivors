@@ -31,20 +31,20 @@ func _init(
 	_mass = mass
 	_debug_mode = debug_mode
 	# Initialize gizmos
-	_gizmos.lead_pos.position = Vector2.ZERO
-	_gizmos.host_vel.add_point(Vector2.ZERO, 0)
-	_gizmos.host_vel.add_point(Vector2.ZERO, 1)
-	_gizmos.host_vel.default_color = Color.GREEN
-	_gizmos.host_vel.width = 1
-	_gizmos.target_vel.add_point(Vector2.ZERO, 0)
-	_gizmos.target_vel.add_point(Vector2.ZERO, 1)
-	_gizmos.target_vel.default_color = Color.PURPLE
-	_gizmos.target_vel.width = 1
-	_host.add_child(_gizmos.host_vel)
-	_host.add_child(_gizmos.lead_pos)
-	_host.add_child(_gizmos.target_vel)
+	if debug_mode:
+		_gizmos.lead_pos.position = Vector2.ZERO
+		_gizmos.host_vel.add_point(Vector2.ZERO, 0)
+		_gizmos.host_vel.add_point(Vector2.ZERO, 1)
+		_gizmos.host_vel.default_color = Color.GREEN
+		_gizmos.host_vel.width = 1
+		_gizmos.target_vel.add_point(Vector2.ZERO, 0)
+		_gizmos.target_vel.add_point(Vector2.ZERO, 1)
+		_gizmos.target_vel.default_color = Color.PURPLE
+		_gizmos.target_vel.width = 1
+		_host.add_child(_gizmos.host_vel)
+		_host.add_child(_gizmos.lead_pos)
+		_host.add_child(_gizmos.target_vel)
 
-	
 
 func seek(target : Vector2, slow_on_approach : bool = false):
 	steering_force += _do_seek(target, slow_on_approach)
@@ -75,10 +75,11 @@ func _do_pursue(target) -> Vector2:
 		var lead_factor = _host.position.distance_to(t_pos) / _max_speed
 		var lead_pos = t_pos + t_vel * lead_factor
 		# update gizmos
-		_gizmos.target_vel.reparent(target)
-		_gizmos.target_vel.position = Vector2.ZERO
-		_gizmos.target_vel.points[1] = t_vel
-		t_pos = lead_pos
+		if _debug_mode:
+			_gizmos.target_vel.reparent(target)
+			_gizmos.target_vel.position = Vector2.ZERO
+			_gizmos.target_vel.points[1] = t_vel
+			t_pos = lead_pos
 	
 	return _do_seek(t_pos, false)
 	
@@ -90,7 +91,8 @@ func move(delta) -> KinematicCollision2D:
 	_host.velocity += steering_force
 	_host.velocity = _truncate(_host.velocity, _max_speed)
 	var collisions = _host.move_and_collide(_host.velocity * delta)
-	_gizmos.host_vel.points[1] = _host.velocity
+	if _debug_mode:
+		_gizmos.host_vel.points[1] = _host.velocity
 	steering_force = Vector2.ZERO
 	return collisions
 

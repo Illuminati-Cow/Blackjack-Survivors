@@ -9,7 +9,7 @@ func _ready():
 	pass # Replace with function body.
 
 func _physics_process(delta):
-	position += transform.x * ProjectileVars.speed * delta
+	position += transform.x * get_node("../Stats").projectileSpeed * delta
 	if position > Vector2(GlobalVars.StageSizeX, GlobalVars.StageSizeY):
 		print("projectile reached edge of stage, deleting")
 		queue_free()
