@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bipydopdpp7he"]
+[gd_scene load_steps=9 format=3 uid="uid://bipydopdpp7he"]
 
 [ext_resource type="Script" path="res://src/Player/GameStart.gd" id="1_h86w0"]
 [ext_resource type="Texture2D" uid="uid://dpvy5hcvo8k2g" path="res://assets/1000_F_489045204_OXrFyuwCMBgX8hKQL4LnTZcUoInze4sy.jpg" id="2_0sait"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bynrc34h2fksh" path="res://src/blackjack/blackjack_manager.res" id="6_oc8pb"]
 [ext_resource type="Script" path="res://projectile_vars.gd" id="7_0qrgv"]
 [ext_resource type="PackedScene" uid="uid://74twye6gainy" path="res://src/Player/projectileScene.tscn" id="7_yir3u"]
+[ext_resource type="PackedScene" uid="uid://blh3mo4biyutf" path="res://scenes/PauseMenu.tscn" id="8_rsou4"]
 [ext_resource type="PackedScene" uid="uid://iu1hmefbguyx" path="res://src/game_manager/game_manager.res" id="9_6arva"]
 
 [node name="PlayerTest" type="Node2D"]
@@ -37,6 +38,15 @@ one_shot = true
 script = ExtResource("7_0qrgv")
 
 [node name="GameManager" parent="." instance=ExtResource("9_6arva")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("8_rsou4")]
+offset_left = -185.0
+offset_top = -157.0
+offset_right = -117.0
+offset_bottom = -116.0
+scale = Vector2(5, 5)
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [connection signal="timeout" from="Player/ShootCooldown" to="Player" method="_on_shoot_cooldown_timeout"]
 [connection signal="player_lost" from="BlackjackManager" to="Stats" method="_minorDecrease"]

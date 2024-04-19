@@ -20,6 +20,26 @@ var bigEnemies = [
 
 var waveNum := 1 as int
 
+# Pause menu variables
+@onready var pause_menu = $PauseMenu
+var paused = false
+
+# Function to toggle pause state and display the pause menu
+func toggle_pause():
+	paused = !paused
+	pause_menu.visible = paused
+	get_tree().set_pause(paused)
+	if paused:
+		Engine.time_scale = 0
+	else:
+		Engine.time_scale = 1
+
+
+# Overriding _input to listen for pause key presses
+func _input(event):
+	if event.is_action_just_pressed("pause") and !get_tree().is_paused():
+		toggle_pause()
+
 #/func _ready():
 	#print("spawning enemies (start of game)")
 	#var enemy := enemies.pick_random().instantiate() as CardEnemy
