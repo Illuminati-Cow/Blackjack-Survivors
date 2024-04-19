@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://projectile_vars.gd" id="7_0qrgv"]
 [ext_resource type="Script" path="res://src/ui/ui_hand.gd" id="7_8u5si"]
 [ext_resource type="PackedScene" uid="uid://74twye6gainy" path="res://src/Player/projectileScene.tscn" id="7_yir3u"]
-[ext_resource type="Script" path="res://src/ui/HouseText.gd" id="8_qs8no"]
+[ext_resource type="Script" path="res://src/ui/HouseNum.gd" id="8_qs8no"]
 [ext_resource type="Texture2D" uid="uid://cxy2jyhdluncj" path="res://assets/cards_spritesheet.png" id="8_shhl8"]
 [ext_resource type="Script" path="res://src/ui/ScoreText.gd" id="9_5icqm"]
 [ext_resource type="PackedScene" uid="uid://iu1hmefbguyx" path="res://src/game_manager/game_manager.res" id="9_6arva"]
@@ -90,6 +90,7 @@ text = "[center]21[/center]"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
+script = ExtResource("8_qs8no")
 
 [node name="HouseText" type="RichTextLabel" parent="CanvasLayer/Control/HouseHand"]
 layout_mode = 1
@@ -171,8 +172,12 @@ stretch_mode = 4
 script = ExtResource("9_i6d2n")
 
 [connection signal="timeout" from="Player/ShootCooldown" to="Player" method="_on_shoot_cooldown_timeout"]
+[connection signal="hands_cleared" from="BlackjackManager" to="CanvasLayer/Control/HouseHand/HouseText" method="_on_blackjack_manager_hands_cleared"]
+[connection signal="hands_cleared" from="BlackjackManager" to="CanvasLayer/Control/PlayerHand/ScoreText" method="_on_blackjack_manager_hands_cleared"]
 [connection signal="house_hit" from="BlackjackManager" to="CanvasLayer/Control/HouseHand" method="_on_blackjack_manager_house_hit"]
+[connection signal="house_hit" from="BlackjackManager" to="CanvasLayer/Control/HouseHand/HouseText" method="_on_blackjack_manager_house_hit"]
 [connection signal="player_hit" from="BlackjackManager" to="CanvasLayer/Control/PlayerHand" method="_on_blackjack_manager_player_hit"]
+[connection signal="player_hit" from="BlackjackManager" to="CanvasLayer/Control/PlayerHand/ScoreText" method="_on_blackjack_manager_player_hit"]
 [connection signal="player_lost" from="BlackjackManager" to="Stats" method="_minorDecrease"]
 [connection signal="player_lost" from="BlackjackManager" to="GameManager" method="_spawn_big_enemy"]
 [connection signal="player_won" from="BlackjackManager" to="Stats" method="_minorIncrease"]

@@ -1,5 +1,4 @@
 extends RichTextLabel
-
 var rank = 0
 var rankStr
 
@@ -12,8 +11,7 @@ func _ready():
 func _process(delta):
 	pass
 
-
-func _on_blackjack_manager_player_hit(card):
+func _on_blackjack_manager_house_hit(card):
 	rank += card.rank
 	rankStr = str(rank)
 	print(card.rank)
@@ -24,3 +22,6 @@ func _on_blackjack_manager_hands_cleared():
 	rank = 0
 	rankStr = str(rank)
 	text = rankStr
+
+
+
