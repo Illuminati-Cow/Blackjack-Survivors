@@ -1,55 +1,45 @@
 extends CharacterBody2D
 
-const GRAVITY = 200.0
-const WALK_SPEED = 200
 @export var ProjectileScene : PackedScene
-@export var fireCooldown = 0.25
+var spread = 0.6
 var canShoot = true
 
-func _ready():
-	start()
-
-func start():
-	$ShootCooldown.wait_time = fireCooldown
+func get_input():
+	var input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	velocity = input_direction * get_node("../Stats").playerSpeed
 
 func _physics_process(delta):
-
-	if Input.is_action_pressed("ui_up"):
-		velocity.y -= WALK_SPEED
-	elif Input.is_action_pressed("ui_down"):
-		velocity.y += WALK_SPEED
-	elif Input.is_action_pressed("ui_left"):
-		velocity.x = -WALK_SPEED
-	elif Input.is_action_pressed("ui_right"):
-		velocity.x =  WALK_SPEED
-	else:
-		velocity.x = 0
-		velocity.y = 0
-
-	# "move_and_slide" already takes delta time into account.
+	look_at(get_global_mouse_position())
+	get_input()
 	move_and_slide()
-
+	
+	
 func _process(_delta):
 	#print($ShootCooldown.time_left)
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		shoot()
+	if Input.is_action_just_pressed("RightMouseButton"):#Input.mouse_butt (MOUSE_BUTTON_RIGHT):
+		get_node("../BlackjackManager")._on_player_stand()
 
 func shoot():
 	if not canShoot:
 		return
-	#ProjectileVars.speed += 100
+	#get_node("../Stats").speed += 100
 	print("shooting projectile")
 	canShoot = false
 	$ShootCooldown.start()
-	if ProjectileVars.projectileCount > 1.0:
-		for i in floor(ProjectileVars.projectileCount):
+	if get_node("../Stats").projectileCount >= 2.0:
+		for i in floor(get_node("../Stats").projectileCount):
 			var p1 = ProjectileScene.instantiate()
 			owner.add_child(p1)
 			p1.transform = $Emitter.global_transform
-			var min = $Emitter.global_transform.origin - Vector2(0, floor(ProjectileVars.projectileCount*20))
-			var max = $Emitter.global_transform.origin + Vector2(0, floor(ProjectileVars.projectileCount*40))
+			p1.transform = (p1.transform).looking_at(get_global_mouse_position())
+			var min = -spread#p1.transform.rotated(spread)#$Emitter.global_transform.origin - Vector2(0, floor(get_node("../Stats").projectileCount*20))
+			var max = spread#p1.transform.rotated(-spread)#$Emitter.global_transform.origin + Vector2(0, floor(get_node("../Stats").projectileCount*40))
 			#from pentadecagon at https://stackoverflow.com/questions/20925175/evenly-distribute-x-values-within-a-given-range:
-			p1.transform.origin = min + i*(max-min)/(floor(ProjectileVars.projectileCount)) #+ Vector2(0, 50*i)
+			p1.transform = p1.transform.rotated_local(min + i*(max-min)/(floor(get_node("../Stats").projectileCount))) #+ Vector2(0, 50*i)
+			#print(min + (i+1)*(max-min)/(floor(get_node("../Stats").projectileCount + 1)))
+			print(p1.transform.get_rotation())
 			
 	else:
 		var p2 = ProjectileScene.instantiate()
