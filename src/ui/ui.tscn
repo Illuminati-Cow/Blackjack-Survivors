@@ -88,6 +88,7 @@ grow_horizontal = 0
 grow_vertical = 0
 pivot_offset = Vector2(2, 0)
 script = ExtResource("3_nr0xg")
+is_player = true
 card_spread_angle = 10.0
 card_scale = 1.2
 
@@ -127,6 +128,7 @@ scale = Vector2(2.33195, 2.33195)
 texture = SubResource("AtlasTexture_bfqx3")
 stretch_mode = 4
 script = ExtResource("4_pa7fw")
+_tx_size = Vector2i(65, 80)
 
 [node name="Stats" type="Control" parent="."]
 layout_mode = 1

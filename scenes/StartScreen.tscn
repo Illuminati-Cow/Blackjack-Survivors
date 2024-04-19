@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://df174jhphnhis"]
+[gd_scene load_steps=2 format=3 uid="uid://bxvbvbp0uxkmx"]
 
 [ext_resource type="Script" path="res://src/Start/startScript.gd" id="1_pumfh"]
 
@@ -7,22 +7,27 @@ script = ExtResource("1_pumfh")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
-anchor_left = -0.049
-anchor_right = 4.944
-anchor_bottom = 4.827
-offset_left = 4.448
-offset_top = 5.0
-offset_right = 0.511719
-offset_bottom = 0.104004
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Button" type="Button" parent="Control"]
-layout_mode = 0
-offset_left = 1788.0
-offset_top = 1112.0
-offset_right = 3776.0
-offset_bottom = 1743.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -126.5
+offset_top = -44.0
+offset_right = 126.5
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "Start Game"
 icon_alignment = 1
 

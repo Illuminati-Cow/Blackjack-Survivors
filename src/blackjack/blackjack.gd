@@ -222,7 +222,7 @@ func _on_player_stand():
 		-1:
 			print("lost")
 			player_lost.emit(player_hand.value())
-	hands_locked = true
+	new_hands()
 #endregion
 
 
@@ -251,7 +251,7 @@ func _compare_hands(hand_a : Hand, hand_b : Hand):
 # NOTE: Assumes that house draws until stand or win/loss
 # Returns an array of hand values where each index is the value after each draw
 func _draw_house_hand() -> Array[int]:
-	var hand_values := []
+	var hand_values : Array[int] = []
 	while _eval_hand(house_hand) == HandState.PLAYING:
 		house_hand.add(deck.draw_card())
 		hand_values.append(house_hand.value())

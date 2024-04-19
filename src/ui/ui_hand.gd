@@ -96,6 +96,7 @@ func _on_blackjack_manager_house_hit(card, hand_value):
 	if not is_player:
 		_card_queue.append(create_card(get_card_texture(card)))
 		$ScoreText.text = str(hand_value as int)
+		print_debug("Should be drawing!")
 
 
 func _on_blackjack_manager_player_hit(card, hand_value):

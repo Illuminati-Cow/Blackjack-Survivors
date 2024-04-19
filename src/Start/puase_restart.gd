@@ -1,10 +1,12 @@
-extends Control
+class_name PauseMenu extends Control
+
+signal resumed
 
 @onready var main = $"../../"
 
 
 func _on_resume_pressed():
-	main.pasueMenu
+	resumed.emit()
 
 
 func _on_quit_pressed():

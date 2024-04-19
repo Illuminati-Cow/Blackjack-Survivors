@@ -3,11 +3,14 @@ class_name Player extends CharacterBody2D
 # Signal
 signal dead
 signal health_changed(current_health : int)
+signal stand
 
 
 @onready var health := $Health as Health
-@onready var invinc_timer = $InvincibilityTimer as Timer
+@export var stats : PlayerStats
 @export var ProjectileScene : PackedScene
+@onready
+var invinc_timer = $InvincibilityTimer
 var spread = 0.6
 var canShoot = true
 var _invincible = false
@@ -15,7 +18,7 @@ var _invincible = false
 
 func get_input():
 	var input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	velocity = input_direction * get_node("../Stats").playerSpeed
+	velocity = input_direction * stats.playerSpeed
 
 
 func _physics_process(delta):
@@ -28,8 +31,8 @@ func _process(_delta):
 	#print($ShootCooldown.time_left)
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		shoot()
-	if Input.is_action_just_pressed("RightMouseButton"):#Input.mouse_butt (MOUSE_BUTTON_RIGHT):
-		get_node("../BlackjackManager")._on_player_stand()
+	if Input.is_action_just_pressed("stand"):#Input.mouse_butt (MOUSE_BUTTON_RIGHT):
+		stand.emit()
 
 
 func shoot():

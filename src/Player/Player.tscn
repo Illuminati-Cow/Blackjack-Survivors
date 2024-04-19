@@ -20,7 +20,7 @@ scale = Vector2(5.40757, 5.07917)
 texture = ExtResource("2_hydvo")
 
 [node name="Emitter" type="Marker2D" parent="."]
-position = Vector2(0, -194)
+position = Vector2(195, 0)
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("3_r3ban")

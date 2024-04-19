@@ -19,8 +19,33 @@ var bigEnemies = [
 ]
 @onready var player = root.get_node("Player") as Player
 
-
 var waveNum := 1 as int
+
+# Pause menu variables
+@onready var pause_menu = root.get_node("PauseMenu") as PauseMenu
+var paused = false
+
+
+# Function to toggle pause state and display the pause menu
+func _input(event):
+	if event.is_action_pressed("pause"):
+		toggle_pause()
+
+
+func toggle_pause():
+	get_tree().paused = !get_tree().paused
+	if get_tree().paused:
+		show_pause_menu()
+	else:
+		hide_pause_menu()
+
+		
+func show_pause_menu():
+	pause_menu.visible = true
+
+	
+func hide_pause_menu():
+	pause_menu.visible = false
 
 
 func _ready():
@@ -32,10 +57,16 @@ func _ready():
 	var stats = root.find_child("Stats") as StatsDisplay
 	blackjack_manager.player_hit.connect(p_h._on_blackjack_manager_player_hit)
 	blackjack_manager.house_hit.connect(h_h._on_blackjack_manager_house_hit)
-	p_h.ui_done.connect(on_ui_done)
-	h_h.ui_done.connect(on_ui_done)
+	blackjack_manager.hands_cleared.connect(h_h._on_blackjack_manager_hands_cleared)
+	blackjack_manager.hands_cleared.connect(p_h._on_blackjack_manager_hands_cleared)
+	p_h.ui_done.connect(_on_ui_done)
+	h_h.ui_done.connect(_on_ui_done)
 	player.dead.connect(_on_player_dead)
 	player.health_changed.connect(hlth_d._on_health_change)
+	player.stand.connect(blackjack_manager._on_player_stand)
+	pause_menu.resumed.connect(_on_resumed)
+	pause_menu.visible = false
+	blackjack_manager.new_hands()
 
 
 # Spawn a random enemy
@@ -61,12 +92,16 @@ func _spawn_big_enemy(hand):
 	print(bigEnemy.position)
 
 
-func on_ui_done():
+func _on_ui_done():
 	blackjack_manager.new_hands()
 
 
 func _on_player_dead():
 	get_tree().paused = true
 	print_debug("Player Dead : Game Over!")
+	
+	
+func _on_resumed():
+	toggle_pause()
   
  
