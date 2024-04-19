@@ -1,9 +1,11 @@
-extends Control
+class_name HandDisplay extends Control
 
 @onready var spawn_location = $SpawnLocation.position
 
 @onready
 var card_spritesheet : Texture2D = preload("res://assets/cards_spritesheet.png")
+@onready
+var gm = get_tree().root.find_child("GameManager")
 @export 
 var is_player = false
 @export
@@ -27,6 +29,7 @@ var _original_size : Vector2
 
 func _ready():
 	_original_size = size
+	assert(gm != null)
 
 
 func _process(delta):
@@ -89,15 +92,16 @@ func create_card(texture : Texture2D) -> TextureRect:
 	return t_r
 
 
-func _on_blackjack_manager_house_hit(card):
+func _on_blackjack_manager_house_hit(card, hand_value):
 	if not is_player:
 		_card_queue.append(create_card(get_card_texture(card)))
+		$ScoreText.text = str(hand_value as int)
 
 
-func _on_blackjack_manager_player_hit(card):
+func _on_blackjack_manager_player_hit(card, hand_value):
 	if is_player:
 		_card_queue.append(create_card(get_card_texture(card)))
-
+		$ScoreText.text = str(hand_value as int)
 
 func _on_blackjack_manager_hands_cleared():
 	for card in _card_queue:
