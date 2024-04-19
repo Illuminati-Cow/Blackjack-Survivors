@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bynrc34h2fksh" path="res://src/blackjack/blackjack_manager.res" id="6_oc8pb"]
 [ext_resource type="Script" path="res://projectile_vars.gd" id="7_0qrgv"]
 [ext_resource type="PackedScene" uid="uid://74twye6gainy" path="res://src/Player/projectileScene.tscn" id="7_yir3u"]
+[ext_resource type="PackedScene" uid="uid://blh3mo4biyutf" path="res://scenes/PauseMenu.tscn" id="8_rsou4"]
 [ext_resource type="PackedScene" uid="uid://b3ga5g5rdsb3y" path="res://src/ui/ui.tscn" id="8_lbtwd"]
 [ext_resource type="PackedScene" uid="uid://iu1hmefbguyx" path="res://src/game_manager/game_manager.res" id="9_6arva"]
 
@@ -39,6 +40,14 @@ script = ExtResource("7_0qrgv")
 
 [node name="GameManager" parent="." instance=ExtResource("9_6arva")]
 
+[node name="PauseMenu" parent="." instance=ExtResource("8_rsou4")]
+offset_left = -185.0
+offset_top = -157.0
+offset_right = -117.0
+offset_bottom = -116.0
+scale = Vector2(5, 5)
+size_flags_horizontal = 4
+size_flags_vertical = 4
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="UIRoot" parent="CanvasLayer" instance=ExtResource("8_lbtwd")]

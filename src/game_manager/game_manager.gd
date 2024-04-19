@@ -19,29 +19,9 @@ var bigEnemies = [
 ]
 @onready var player = root.get_node("Player") as Player
 
-# Pause menu variables
-@onready var pause_menu = $PauseMenu
-var paused = false
-
-# Function to toggle pause state and display the pause menu
-func _input(event):
-	if event.is_action_pressed("pause"):
-		toggle_pause()
-
-func toggle_pause():
-	get_tree().paused = !get_tree().paused
-	if get_tree().paused:
-		show_pause_menu()
-	else:
-		hide_pause_menu()
-		
-func show_pause_menu():
-	$PauseMenu.visible = true
-	
-func hide_pause_menu():
-	$PauseMenu.visible = false
 
 var waveNum := 1 as int
+
 
 func _ready():
 	# Connect UI to BlackjackManager
@@ -56,6 +36,7 @@ func _ready():
 	h_h.ui_done.connect(on_ui_done)
 	player.dead.connect(_on_player_dead)
 	player.health_changed.connect(hlth_d._on_health_change)
+
 
 # Spawn a random enemy
 func _on_spawn_timer_timeout():
@@ -87,3 +68,5 @@ func on_ui_done():
 func _on_player_dead():
 	get_tree().paused = true
 	print_debug("Player Dead : Game Over!")
+  
+ 
