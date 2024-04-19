@@ -34,6 +34,8 @@ debug_color = Color(0.537255, 0.176471, 0.498039, 0.419608)
 
 [node name="InvincibilityTimer" type="Timer" parent="."]
 wait_time = 0.25
+one_shot = true
 
+[connection signal="dead" from="Health" to="." method="_on_health_dead"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
