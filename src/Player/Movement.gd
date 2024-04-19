@@ -1,7 +1,8 @@
-extends CharacterBody2D
+class_name Player extends CharacterBody2D
 
 # Signal
 signal dead
+signal health_changed(current_health : int)
 
 
 @onready var health := $Health as Health
@@ -67,7 +68,7 @@ func _on_hurtbox_body_entered(body):
 		invinc_timer.start()
 		modulate = Color.CRIMSON
 		_invincible = true
-	
+		health_changed.emit(1)
 
 
 func _on_invincibility_timer_timeout():
