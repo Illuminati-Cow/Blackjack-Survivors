@@ -29,6 +29,8 @@ func _ready():
 	var stats = root.find_child("Stats") as StatsDisplay
 	blackjack_manager.player_hit.connect(p_h._on_blackjack_manager_player_hit)
 	blackjack_manager.house_hit.connect(h_h._on_blackjack_manager_house_hit)
+	p_h.ui_done.connect(on_ui_done)
+	h_h.ui_done.connect(on_ui_done)
 	player.dead.connect(_on_player_dead)
 	player.health_changed.connect(hlth_d._on_health_change)
 
@@ -56,7 +58,7 @@ func _spawn_big_enemy(hand):
 
 
 func on_ui_done():
-	blackjack_manager.hands_locked = false
+	blackjack_manager.new_hands()
 
 
 func _on_player_dead():

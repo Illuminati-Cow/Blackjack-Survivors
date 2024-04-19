@@ -1,11 +1,11 @@
 class_name HandDisplay extends Control
 
+signal ui_done
+
 @onready var spawn_location = $SpawnLocation.position
 
 @onready
 var card_spritesheet : Texture2D = preload("res://assets/cards_spritesheet.png")
-@onready
-var gm = get_tree().root.find_child("GameManager")
 @export 
 var is_player = false
 @export
@@ -25,11 +25,7 @@ var card_scale : float = 1.5
 var _tween_lock := false
 var _card_queue := []
 var _cards := []
-var _original_size : Vector2
-
-func _ready():
-	_original_size = size
-	assert(gm != null)
+var _hand_over = false
 
 
 func _process(delta):
@@ -51,6 +47,10 @@ func _process(delta):
 	# Fix for new hand signal spam permanently locking tween_lock
 	if _cards.is_empty() and _tween_lock:
 		_tween_lock = false
+	
+	if _hand_over and _card_queue.is_empty():
+		await get_tree().create_timer(0.5).timeout
+		ui_done.emit()
 
 
 func _play_card_fall_tween(card : TextureRect):
@@ -102,6 +102,11 @@ func _on_blackjack_manager_player_hit(card, hand_value):
 	if is_player:
 		_card_queue.append(create_card(get_card_texture(card)))
 		$ScoreText.text = str(hand_value as int)
+
+
+func _on_hand_over():
+	_hand_over = true
+
 
 func _on_blackjack_manager_hands_cleared():
 	for card in _card_queue:
