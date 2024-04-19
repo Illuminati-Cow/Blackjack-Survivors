@@ -1,4 +1,4 @@
-extends TextureRect
+class_name HealthDisplay extends TextureRect
 
 var _tx_size : Vector2i
 

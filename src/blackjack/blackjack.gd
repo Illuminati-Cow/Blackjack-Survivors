@@ -3,14 +3,14 @@ class_name Blackjack extends Node
 # Cole Falxa-Sturken 4/15/2024
 
 #region Signals
-signal house_hit(card : Card)
+signal house_hit(card : Card, hand_value : int)
 #signal house_blackjack
 signal house_busted
 #signal house_stand
 signal player_busted
 signal player_nat_blackjack
 signal player_blackjack
-signal player_hit(card : Card)
+signal player_hit(card : Card, hand_value : int)
 signal player_won(hand_value : int)
 signal player_lost(hand_value : int)
 signal tied
@@ -39,6 +39,7 @@ static var house_stand_num := 47
 var deck : Deck
 var house_hand : Hand
 var player_hand : Hand
+var hands_locked : bool = false
 
 
 class Card:
@@ -117,6 +118,7 @@ class Deck:
 	
 	func _init():
 		cards = _create_deck()
+		shuffle()
 		
 	func count() -> int:
 		return cards.size()
@@ -160,8 +162,9 @@ func new_hands() -> void:
 		house_hand.clear()
 		_draw_house_hand()
 	var house_cards : Array[Card] = house_hand.get_cards()
+	var val = house_hand.value()
 	for card : Card in house_cards:
-		house_hit.emit(card)
+		house_hit.emit(card, val)
 
 
 func draw() -> Card:
@@ -176,7 +179,11 @@ static func increment_bj_number():
 
 #region Signal Receivers
 func _on_death_draw(card : Card):
+	if hands_locked:
+		return
+		
 	player_hand.add(card)
+	player_hit.emit(card, player_hand.value())
 	match _eval_hand(player_hand):
 		HandState.NATURAL_BLACKJACK:
 			player_nat_blackjack.emit()
@@ -203,6 +210,9 @@ func _on_death_draw(card : Card):
 
 
 func _on_player_stand():
+	if hands_locked:
+		return
+		
 	match _compare_hands(player_hand, house_hand):
 		1:
 			print("won!")
