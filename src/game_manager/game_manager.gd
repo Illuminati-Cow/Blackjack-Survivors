@@ -19,6 +19,28 @@ var bigEnemies = [
 ]
 @onready var player = root.get_node("Player") as Player
 
+# Pause menu variables
+@onready var pause_menu = $PauseMenu
+var paused = false
+
+# Function to toggle pause state and display the pause menu
+func _input(event):
+	if event.is_action_pressed("pause"):
+		toggle_pause()
+
+func toggle_pause():
+	get_tree().paused = !get_tree().paused
+	if get_tree().paused:
+		show_pause_menu()
+	else:
+		hide_pause_menu()
+		
+func show_pause_menu():
+	$PauseMenu.visible = true
+	
+func hide_pause_menu():
+	$PauseMenu.visible = false
+
 var waveNum := 1 as int
 
 func _ready():
