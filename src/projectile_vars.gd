@@ -42,7 +42,7 @@ func _minorDecrease(hand):
 
 func _modifyShotSpeed(mod):
 	projectileSpeed += (0.02*projectileSpeed)*mod
-	stat_change.emit(1, (0.02*projectileSpeed)*mod)
+	stat_change.emit(1, projectileSpeed)
 	
 func _modifyDamage(mod):
 	if damage > 1:
@@ -51,7 +51,7 @@ func _modifyDamage(mod):
 
 func _modifyShotCount(mod):
 	projectileCount += (0.02*projectileCount)*mod
-	stat_change.emit(0, (0.02*projectileCount)*mod)
+	stat_change.emit(0, projectileCount)
 
 func _modifyPlayerSpeed(mod):
 	playerSpeed += (0.02*playerSpeed)*mod

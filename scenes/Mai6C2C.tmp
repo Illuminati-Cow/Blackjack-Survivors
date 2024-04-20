@@ -55,6 +55,6 @@ size_flags_vertical = 4
 [node name="UIRoot" parent="CanvasLayer" instance=ExtResource("8_lbtwd")]
 
 [connection signal="timeout" from="Player/ShootCooldown" to="Player" method="_on_shoot_cooldown_timeout"]
-[connection signal="player_busted" from="BlackjackManager" to="GameManager" method="_spawn_big_enemy"]
 [connection signal="player_lost" from="BlackjackManager" to="Stats" method="_minorDecrease"]
+[connection signal="player_lost" from="BlackjackManager" to="GameManager" method="_spawn_big_enemy"]
 [connection signal="player_won" from="BlackjackManager" to="Stats" method="_minorIncrease"]
