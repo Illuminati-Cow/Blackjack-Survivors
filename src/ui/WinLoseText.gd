@@ -1,6 +1,6 @@
 class_name WinLoseText extends Control
 
-#signal ui_done
+signal ui_done
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -28,18 +28,20 @@ func player_bust():
 
 func player_win(arg):
 	$WinLoseTextBox.text = "YOU WIN"
-	#ui_done.emit()
 	await get_tree().create_timer(1).timeout
+	ui_done.emit()
 	$WinLoseTextBox.text =""
 
 func player_lost(arg):
 	$WinLoseTextBox.text = "YOU LOSE"
 	await get_tree().create_timer(1).timeout
+	ui_done.emit()
 	$WinLoseTextBox.text =""
 
 func tied():
 	$WinLoseTextBox.text = "TIE"
 	await get_tree().create_timer(1).timeout
+	ui_done.emit()
 	$WinLoseTextBox.text =""
 
 func player_nat_blackjack():

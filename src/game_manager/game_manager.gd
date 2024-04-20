@@ -117,8 +117,8 @@ func _ready():
 	
 	pause_menu.visible = false
 	
-	#win_text.ui_done.connect(_on_ui_done)
-	#assert(win_text.ui_done.is_connected(_on_ui_done))
+	win_text.ui_done.connect(_on_ui_done)
+	assert(win_text.ui_done.is_connected(_on_ui_done))
 	#endregion
 	await get_tree().create_timer(1).timeout 
 	blackjack_manager.new_hands()
