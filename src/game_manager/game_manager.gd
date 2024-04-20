@@ -50,34 +50,78 @@ func hide_pause_menu():
 
 func _ready():
 	# Connect UI to BlackjackManager
-	var p_h = root.find_child("PlayerHand") as HandDisplay
+	var ui_root = root.find_child("UIRoot")
+	var p_h = ui_root.get_node("%PlayerHand") as HandDisplay
 	assert(p_h != null)
-	var h_h = root.find_child("HouseHand") as HandDisplay
-	var hlth_d = root.find_child("HealthDisplay") as HealthDisplay
-	var stats = root.find_child("Stats") as StatsDisplay
+	var h_h = ui_root.get_node("%HouseHand") as HandDisplay
+	assert(h_h != null)
+	var hlth_d = ui_root.get_node("%HealthDisplay") as HealthDisplay
+	assert(hlth_d != null)
+	var stats = ui_root.get_node("%Stats") as StatsDisplay
+	assert(stats != null)
+	
+	#region Signal Connections
 	blackjack_manager.player_hit.connect(p_h._on_blackjack_manager_player_hit)
+	assert(blackjack_manager.player_hit.is_connected(p_h._on_blackjack_manager_player_hit))
+	
 	blackjack_manager.house_hit.connect(h_h._on_blackjack_manager_house_hit)
+	assert(blackjack_manager.house_hit.is_connected(h_h._on_blackjack_manager_house_hit))
+	
 	blackjack_manager.hands_cleared.connect(h_h._on_blackjack_manager_hands_cleared)
+	assert(blackjack_manager.hands_cleared.is_connected(h_h._on_blackjack_manager_hands_cleared))
+	
 	blackjack_manager.hands_cleared.connect(p_h._on_blackjack_manager_hands_cleared)
+	assert(blackjack_manager.hands_cleared.is_connected(p_h._on_blackjack_manager_hands_cleared))
 	
 	blackjack_manager.player_nat_blackjack.connect(win_text.player_nat_blackjack)
+	assert(blackjack_manager.player_nat_blackjack.is_connected(win_text.player_nat_blackjack))
+	
 	blackjack_manager.player_blackjack.connect(win_text.player_blackjack)
+	assert(blackjack_manager.player_blackjack.is_connected(win_text.player_blackjack))
+	
 	blackjack_manager.house_blackjack.connect(win_text.house_blackjack)
+	assert(blackjack_manager.house_blackjack.is_connected(win_text.house_blackjack))
+	
 	blackjack_manager.player_busted.connect(win_text.player_bust)
+	assert(blackjack_manager.player_busted.is_connected(win_text.player_bust))
+	
 	blackjack_manager.house_busted.connect(win_text.house_bust)
+	assert(blackjack_manager.house_busted.is_connected(win_text.house_bust))
+	
 	blackjack_manager.player_won.connect(win_text.player_win)
+	assert(blackjack_manager.house_busted.is_connected(win_text.house_bust))
+	
 	blackjack_manager.player_lost.connect(win_text.player_lost)
+	assert(blackjack_manager.house_busted.is_connected(win_text.house_bust))
+	
 	blackjack_manager.tied.connect(win_text.tied)
+	assert(blackjack_manager.house_busted.is_connected(win_text.house_bust))
 	
 	p_h.ui_done.connect(_on_ui_done)
+	assert(p_h.ui_done.is_connected(_on_ui_done))
+	
 	h_h.ui_done.connect(_on_ui_done)
+	assert(h_h.ui_done.is_connected(_on_ui_done))
+	
 	player.dead.connect(_on_player_dead)
+	assert(player.dead.is_connected(_on_player_dead))
+	
 	player.health_changed.connect(hlth_d._on_health_change)
+	assert(player.health_changed.is_connected(hlth_d._on_health_change))
+	
 	player.stand.connect(blackjack_manager._on_player_stand)
+	assert(player.stand.is_connected(blackjack_manager._on_player_stand))
+	
 	pause_menu.resumed.connect(_on_resumed)
+	assert(pause_menu.resumed.is_connected(_on_resumed))
+	
 	pause_menu.visible = false
+	
+	#win_text.ui_done.connect(_on_ui_done)
+	#assert(win_text.ui_done.is_connected(_on_ui_done))
+	#endregion
+	await get_tree().create_timer(1).timeout 
 	blackjack_manager.new_hands()
-	win_text.ui_done.connect(_on_ui_done)
 
 
 # Spawn a random enemy
@@ -105,7 +149,8 @@ func _spawn_big_enemy(hand):
 
 func _on_ui_done():
 	print("ui done")
-	blackjack_manager.new_hands()
+	if blackjack_manager.hands_locked:
+		blackjack_manager.new_hands()
 
 
 func _on_player_dead():

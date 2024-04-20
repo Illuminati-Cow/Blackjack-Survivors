@@ -55,6 +55,9 @@ class Card:
 	func _init(_suit : Suit, _rank : int):
 		suit = _suit
 		rank = _rank
+		
+	func _to_string() -> String:
+		return str(rank) + " " + str(Suit.keys()[suit])
 
 		
 class Hand:
@@ -96,6 +99,13 @@ class Hand:
 				else:
 					sum = low_sum
 			return sum
+	
+	
+	func _to_string() -> String:
+		var out : String = ""
+		for card in _cards:
+			out += card._to_string() + "  "
+		return out
 	
 	
 	func _filter_aces(hand : Array[Card], inverted : bool = false) -> Array[Card]:
@@ -166,10 +176,13 @@ func new_hands() -> void:
 		hand_vals = _draw_house_hand()
 		eval = _eval_hand(house_hand)
 	var house_cards : Array[Card] = house_hand.get_cards()
-	var val = house_hand.value()
 	if eval == HandState.BUST:
+		print(house_hand)
+		hands_locked = true
 		house_busted.emit()
 	if eval == HandState.BLACKJACK:
+		print(house_hand)
+		hands_locked = true
 		house_blackjack.emit()
 	for card : Card in house_cards:
 		house_hit.emit(card, hand_vals.pop_front())
@@ -194,10 +207,13 @@ func _on_death_draw(card : Card):
 	player_hit.emit(card, player_hand.value())
 	match _eval_hand(player_hand):
 		HandState.NATURAL_BLACKJACK:
+			hands_locked = true
 			player_nat_blackjack.emit()
 		HandState.BLACKJACK:
+			hands_locked = true
 			player_blackjack.emit()
 		HandState.BUST:
+			hands_locked = true
 			player_busted.emit()
 	# Check for marginal victory if obvious victory not present
 	# NOTE: Assumes that house draws full hand before player

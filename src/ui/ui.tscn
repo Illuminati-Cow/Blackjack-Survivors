@@ -23,6 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="HouseHand" type="Control" parent="."]
+unique_name_in_owner = true
 modulate = Color(1, 0.980392, 0.945098, 1)
 layout_mode = 1
 anchor_left = 0.782
@@ -79,6 +80,7 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="PlayerHand" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -117,6 +119,7 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="HealthDisplay" type="TextureRect" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -132,6 +135,7 @@ script = ExtResource("4_pa7fw")
 _tx_size = Vector2i(65, 80)
 
 [node name="Stats" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 0
 offset_left = 7.0
@@ -225,6 +229,7 @@ expand_mode = 2
 stretch_mode = 4
 
 [node name="WinLoseText" type="Control" parent="."]
+unique_name_in_owner = true
 anchors_preset = 0
 offset_left = 1117.0
 offset_top = 370.0
