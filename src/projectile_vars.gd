@@ -7,6 +7,8 @@ class_name PlayerStats extends Node
 @export var rateOfFire = 0.25
 #@export var spread = 0
 
+signal stat_change(int, float)
+
 func _minorIncrease(hand):
 	match (randi() % 4): #should be 0 through 4 (inclusive)
 		0:
@@ -40,13 +42,16 @@ func _minorDecrease(hand):
 
 func _modifyShotSpeed(mod):
 	projectileSpeed += (0.02*projectileSpeed)*mod
+	stat_change.emit(1, projectileSpeed)
 	
 func _modifyDamage(mod):
 	if damage > 1:
 		damage += 1*mod
+		stat_change.emit(3, 1*mod)
 
 func _modifyShotCount(mod):
 	projectileCount += (0.02*projectileCount)*mod
+	stat_change.emit(0, projectileCount)
 
 func _modifyPlayerSpeed(mod):
 	playerSpeed += (0.02*playerSpeed)*mod

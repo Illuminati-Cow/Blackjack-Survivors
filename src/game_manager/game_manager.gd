@@ -19,6 +19,7 @@ var bigEnemies = [
 ]
 @onready var player = root.get_node("Player") as Player
 @onready var win_text = root.find_child("WinLoseText") as WinLoseText
+@onready var stats = root.find_child("Stats") as StatsDisplay
 var waveNum := 1 as int
 
 # Pause menu variables
@@ -57,8 +58,9 @@ func _ready():
 	assert(h_h != null)
 	var hlth_d = ui_root.get_node("%HealthDisplay") as HealthDisplay
 	assert(hlth_d != null)
-	var stats = ui_root.get_node("%Stats") as StatsDisplay
+	var stats = ui_root.get_node("%StatsText") as StatsDisplay
 	assert(stats != null)
+	var projectile_stats = root.find_child("Stats") as PlayerStats
 	
 	#region Signal Connections
 	blackjack_manager.player_hit.connect(p_h._on_blackjack_manager_player_hit)
@@ -122,10 +124,15 @@ func _ready():
 	#endregion
 	await get_tree().create_timer(1).timeout 
 	blackjack_manager.new_hands()
+	#win_text.ui_done.connect(_on_ui_done)
+	
+	projectile_stats.stat_change.connect(stats._on_stat_change)
+	
 
 
 # Spawn a random enemy
 func _on_spawn_timer_timeout():
+	print(win_text)
 	for i in waveNum:
 		print("spawning enemies")
 		var enemy := enemies.pick_random().instantiate() as CardEnemy
@@ -138,7 +145,7 @@ func _on_spawn_timer_timeout():
 	waveNum += 1
 
 
-func _spawn_big_enemy(hand):
+func _spawn_big_enemy():
 	var bigEnemy := big_enemy.instantiate() as Enemy #enemies.pick_random().instantiate() as CardEnemy
 	bigEnemy.position = Vector2(randi_range(100, 1000), randi_range(100, 1000))
 	bigEnemy.target = player
