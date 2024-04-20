@@ -22,3 +22,5 @@ var _stats = {
 
 func _on_stat_change(stat : BulletStat, new_value : float):
 	_stats[stat] = format_string % new_value
+	print("_stats[stat] is:")
+	print (_stats[stat])

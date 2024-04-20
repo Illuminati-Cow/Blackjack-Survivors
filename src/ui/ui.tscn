@@ -131,7 +131,7 @@ stretch_mode = 4
 script = ExtResource("4_pa7fw")
 _tx_size = Vector2i(65, 80)
 
-[node name="Stats" type="Control" parent="."]
+[node name="StatsText" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 0
 offset_left = 7.0
@@ -139,7 +139,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("5_rlmwh")
 
-[node name="BulletCount" type="RichTextLabel" parent="Stats"]
+[node name="BulletCount" type="RichTextLabel" parent="StatsText"]
 layout_mode = 2
 offset_left = 44.0
 offset_top = 77.0
@@ -150,7 +150,7 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="BulletSpeed" type="RichTextLabel" parent="Stats"]
+[node name="BulletSpeed" type="RichTextLabel" parent="StatsText"]
 layout_mode = 2
 offset_left = 44.0
 offset_top = 113.0
@@ -160,7 +160,7 @@ text = "100%"
 fit_content = true
 autowrap_mode = 0
 
-[node name="BulletSpread" type="RichTextLabel" parent="Stats"]
+[node name="BulletSpread" type="RichTextLabel" parent="StatsText"]
 layout_mode = 2
 offset_left = 44.0
 offset_top = 149.0
@@ -170,7 +170,7 @@ text = "100%"
 fit_content = true
 autowrap_mode = 0
 
-[node name="BulletDamage" type="RichTextLabel" parent="Stats"]
+[node name="BulletDamage" type="RichTextLabel" parent="StatsText"]
 layout_mode = 2
 offset_left = 44.0
 offset_top = 186.0
@@ -180,7 +180,7 @@ text = "100%"
 fit_content = true
 autowrap_mode = 0
 
-[node name="CountIcon" type="TextureRect" parent="Stats"]
+[node name="CountIcon" type="TextureRect" parent="StatsText"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 offset_top = 73.0
@@ -191,7 +191,7 @@ texture = ExtResource("5_sselv")
 expand_mode = 2
 stretch_mode = 4
 
-[node name="SpeedIcon" type="TextureRect" parent="Stats"]
+[node name="SpeedIcon" type="TextureRect" parent="StatsText"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 offset_top = 109.0
@@ -202,7 +202,7 @@ texture = ExtResource("6_346j3")
 expand_mode = 2
 stretch_mode = 4
 
-[node name="SpreadIcon" type="TextureRect" parent="Stats"]
+[node name="SpreadIcon" type="TextureRect" parent="StatsText"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 offset_top = 145.0
@@ -213,7 +213,7 @@ texture = ExtResource("7_u1u84")
 expand_mode = 2
 stretch_mode = 4
 
-[node name="DamageIcon" type="TextureRect" parent="Stats"]
+[node name="DamageIcon" type="TextureRect" parent="StatsText"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 offset_top = 181.0
