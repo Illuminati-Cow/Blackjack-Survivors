@@ -42,7 +42,7 @@ func shoot():
 	print("shooting projectile")
 	canShoot = false
 	$ShootCooldown.start()
-	if get_node("../Stats").projectileCount >= 2.0:
+	if get_node("../Stats").projectileCount >= 3.0:
 		for i in floor(get_node("../Stats").projectileCount):
 			var p1 = ProjectileScene.instantiate()
 			owner.add_child(p1)
@@ -55,6 +55,15 @@ func shoot():
 			#print(min + (i+1)*(max-min)/(floor(get_node("../Stats").projectileCount + 1)))
 			print(p1.transform.get_rotation())
 			
+	elif get_node("../Stats").projectileCount >= 2:
+		var p3 = ProjectileScene.instantiate()
+		owner.add_child(p3)
+		p3.transform = global_transform
+		p3.transform = (p3.transform).looking_at(get_global_mouse_position())
+		var p4 = ProjectileScene.instantiate()
+		owner.add_child(p4)
+		p4.transform = $Emitter.global_transform
+		p4.transform = (p4.transform).looking_at(get_global_mouse_position())
 	else:
 		var p2 = ProjectileScene.instantiate()
 		owner.add_child(p2)
