@@ -127,6 +127,7 @@ func _ready():
 	#win_text.ui_done.connect(_on_ui_done)
 	
 	projectile_stats.stat_change.connect(stats._on_stat_change)
+	_on_spawn_timer_timeout()
 	
 
 
@@ -161,8 +162,7 @@ func _on_ui_done():
 
 
 func _on_player_dead():
-	get_tree().paused = true
-	print_debug("Player Dead : Game Over!")
+	get_tree().change_scene_to_file("res://scenes/GameEnd.tscn")
 	
 	
 func _on_resumed():
