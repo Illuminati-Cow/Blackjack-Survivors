@@ -104,6 +104,7 @@ func _spawn_big_enemy(hand):
 
 
 func _on_ui_done():
+	print("ui done")
 	blackjack_manager.new_hands()
 
 

@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://ddp4uto6nwdwy" path="res://src/Player/Player.tscn" id="3_4xbyh"]
 [ext_resource type="Script" path="res://src/projectile_vars.gd" id="6_7xori"]
 [ext_resource type="PackedScene" uid="uid://bynrc34h2fksh" path="res://src/blackjack/blackjack_manager.res" id="6_oc8pb"]
-[ext_resource type="PackedScene" path="res://src/Player/projectileScene.tscn" id="7_yir3u"]
+[ext_resource type="PackedScene" uid="uid://74twye6gainy" path="res://src/Player/projectileScene.tscn" id="7_yir3u"]
 [ext_resource type="PackedScene" uid="uid://b3ga5g5rdsb3y" path="res://src/ui/ui.tscn" id="8_lbtwd"]
 [ext_resource type="PackedScene" uid="uid://d24g6e4fib1xm" path="res://scenes/PauseMenu.tscn" id="8_rsou4"]
 [ext_resource type="PackedScene" uid="uid://iu1hmefbguyx" path="res://src/game_manager/game_manager.res" id="9_6arva"]
