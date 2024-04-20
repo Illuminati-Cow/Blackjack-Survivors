@@ -76,6 +76,7 @@ func _on_hurtbox_body_entered(body):
 
 func _on_invincibility_timer_timeout():
 	_invincible = false
+	modulate = Color.WHITE
 
 
 func _on_health_dead(damage):
