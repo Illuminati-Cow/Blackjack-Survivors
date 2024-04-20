@@ -58,7 +58,7 @@ func _ready():
 	assert(h_h != null)
 	var hlth_d = ui_root.get_node("%HealthDisplay") as HealthDisplay
 	assert(hlth_d != null)
-	var stats = ui_root.get_node("%StatsText") as StatsDisplay
+	var stats = ui_root.get_node("%Stats") as StatsDisplay
 	assert(stats != null)
 	var projectile_stats = root.find_child("Stats") as PlayerStats
 	

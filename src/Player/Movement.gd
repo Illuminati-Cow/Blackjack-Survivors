@@ -59,6 +59,7 @@ func shoot():
 		var p2 = ProjectileScene.instantiate()
 		owner.add_child(p2)
 		p2.transform = $Emitter.global_transform
+		p2.transform = (p2.transform).looking_at(get_global_mouse_position())
 
 
 func _on_shoot_cooldown_timeout():
