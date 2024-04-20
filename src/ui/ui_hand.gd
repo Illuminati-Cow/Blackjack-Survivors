@@ -43,14 +43,12 @@ func _process(delta):
 					tween.tween_property(c, "rotation_degrees", end_rot, s)\
 						.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_OUT)
 			_cards.append(card)
-	
+	elif not _cards.is_empty() and _hand_over == false:
+		_hand_over = true
+		ui_done.emit()
 	# Fix for new hand signal spam permanently locking tween_lock
 	if _cards.is_empty() and _tween_lock:
 		_tween_lock = false
-	
-	if _hand_over and _card_queue.is_empty():
-		await get_tree().create_timer(0.5).timeout
-		ui_done.emit()
 
 
 func _play_card_fall_tween(card : TextureRect):
@@ -97,6 +95,7 @@ func _on_blackjack_manager_house_hit(card, hand_value):
 		_card_queue.append(create_card(get_card_texture(card)))
 		$ScoreText.text = str(hand_value as int)
 		print_debug("Should be drawing!")
+		_hand_over = false
 
 
 func _on_blackjack_manager_player_hit(card, hand_value):
@@ -104,10 +103,7 @@ func _on_blackjack_manager_player_hit(card, hand_value):
 		print("test")
 		_card_queue.append(create_card(get_card_texture(card)))
 		$ScoreText.text = str(hand_value as int)
-
-
-func _on_hand_over():
-	_hand_over = true
+		_hand_over = false
 
 
 func _on_blackjack_manager_hands_cleared():
@@ -121,3 +117,4 @@ func _on_blackjack_manager_hands_cleared():
 		tween.chain().tween_callback(card.queue_free)
 	_cards.clear()
 	$ScoreText.text = "0"
+	_hand_over = false

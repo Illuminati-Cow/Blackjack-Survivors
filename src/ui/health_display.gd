@@ -27,5 +27,5 @@ func _update_health_card(health : int):
 		return
 	else:
 		var x = _tx_size.x * (health - 1)
-		var y = 0  # Assuming y starts at 0, adjust if necessary
+		var y = 1  # Assuming y starts at 0, adjust if necessary
 		txr.region = Rect2i(Vector2i(x, y), _tx_size)
